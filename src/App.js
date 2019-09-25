@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import store from './store';
 
 import { getTodos } from './api';
 import TodoList from './TodoList';
 
-const App = ({ todosFromStore }) => {
+const App = ({ todosFromStore, setTodos }) => {
   useEffect(() => {
     getTodos()
       .then(todos => {
-        store.dispatch({
-          type: 'SET_TODOS',
-          payload: todos,
-        });
+        setTodos(todos);
       });
   }, []);
 
@@ -23,10 +19,7 @@ const App = ({ todosFromStore }) => {
         : { ...todo, completed: !todo.completed };
     });
 
-    store.dispatch({
-      type: 'SET_TODOS',
-      payload: newTodos,
-    });
+    setTodos(newTodos);
   };
 
   return (
@@ -44,7 +37,15 @@ const App = ({ todosFromStore }) => {
 const mapStateToProps = (state) => ({
   todosFromStore: state.todos,
 });
-export default connect(mapStateToProps)(App);
+
+const mapDispatchToProps = (dispatch) => ({
+  setTodos: (todos) => dispatch({
+    type: 'SET_TODOS',
+    payload: todos,
+  }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 
 // //
