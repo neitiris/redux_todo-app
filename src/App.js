@@ -23,21 +23,23 @@ const App = () => {
       .then(todos => setTodos(todos))
   }, []);
 
+  const toggleTodo = (todoId) => {
+    const newTodos = todos.map(todo => {
+      return (todoId !== todo.id)
+        ? todo
+        : { ...todo, completed: !todo.completed, };
+    });
+
+    setTodos(newTodos);
+  };
+
   return (
     <main className="App">
       <h1>Todo APP with Redux</h1>
 
       <TodoList
         todos={todos}
-        toggleTodo={(todoId) => {
-          const newTodos = todos.map(todo => {
-            return (todoId !== todo.id)
-              ? todo
-              : { ...todo, completed: !todo.completed, };
-          });
-
-          setTodos(newTodos);
-        }}
+        toggleTodo={toggleTodo}
       />
     </main>
   );
