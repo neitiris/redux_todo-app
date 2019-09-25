@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import store from './store';
 
 import { getTodos } from './api';
 import TodoList from './TodoList';
@@ -20,7 +21,12 @@ const App = () => {
 
   useEffect(() => {
     getTodos()
-      .then(todos => setTodos(todos))
+      .then(todos => {
+        store.dispatch({
+          type: 'SET_TODOS',
+          payload: todos,
+        });
+      });
   }, []);
 
   const toggleTodo = (todoId) => {
