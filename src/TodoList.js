@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TodoList = ({ todos }) => (
+const TodoList = ({ todos, toggleTodo }) => (
   <div className="TodoList">
     <strong>Todos:</strong>
 
@@ -12,6 +12,7 @@ const TodoList = ({ todos }) => (
             <input
               type="checkbox"
               checked={todo.completed}
+              onChange={() => toggleTodo(todo.id)}
             />
 
             {todo.title}
@@ -26,4 +27,5 @@ export default TodoList;
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  toggleTodo: PropTypes.func.isRequired
 };
