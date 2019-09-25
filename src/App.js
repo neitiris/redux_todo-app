@@ -5,7 +5,7 @@ import store from './store';
 import { getTodos } from './api';
 import TodoList from './TodoList';
 
-const App = ({ qwe }) => {
+const App = ({ todosFromStore }) => {
   useEffect(() => {
     getTodos()
       .then(todos => {
@@ -17,7 +17,7 @@ const App = ({ qwe }) => {
   }, []);
 
   const toggleTodo = (todoId) => {
-    const newTodos = qwe.map(todo => {
+    const newTodos = todosFromStore.map(todo => {
       return (todoId !== todo.id)
         ? todo
         : { ...todo, completed: !todo.completed };
@@ -34,7 +34,7 @@ const App = ({ qwe }) => {
       <h1>Todo APP with Redux</h1>
 
       <TodoList
-        todos={qwe}
+        todos={todosFromStore}
         toggleTodo={toggleTodo}
       />
     </main>
@@ -42,7 +42,7 @@ const App = ({ qwe }) => {
 };
 
 const mapStateToProps = (state) => ({
-  qwe: state.todos,
+  todosFromStore: state.todos,
 });
 export default connect(mapStateToProps)(App);
 
