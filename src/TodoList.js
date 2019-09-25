@@ -1,27 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TodoList = ({ todos, showUser }) => (
+const TodoList = ({ todos }) => (
   <div className="TodoList">
     <strong>Todos:</strong>
 
     <ul className="TodoList__list">
       {todos.map(todo => (
         <li key={todo.id} className="TodoList__item">
-          <label htmlFor={`todo-${todo.id}`}>
+          <label>
             <input
               type="checkbox"
-              id={`todo-${todo.id}`}
               checked={todo.completed}
-              readOnly
             />
+
             {todo.title}
           </label>
-
-          <button type="button" onClick={() => showUser(todo.userId)}>
-            User
-            {todo.userId}
-          </button>
         </li>
       ))}
     </ul>
@@ -32,5 +26,4 @@ export default TodoList;
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  showUser: PropTypes.func.isRequired,
 };
