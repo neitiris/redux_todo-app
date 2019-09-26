@@ -8,7 +8,7 @@ import {installTodos} from "./store";
 
 const App = ({ todos, setTodos, addTodo }) => {
 
-  const [value, changeAddTodo] = useState('');
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     getTodos()
@@ -38,9 +38,9 @@ const App = ({ todos, setTodos, addTodo }) => {
           type='text'
           placeholder='Enter new todo'
           value={value}
-          onChange={(event) => changeAddTodo(event.target.value)}
+          onChange={(event) => setValue(event.target.value)}
         />
-        <button onClick={() => handleAddTodo}>Add</button>
+        <button type='submit'>Add</button>
       </form>
 
       <TodoList />
