@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getTodos } from './api';
 import TodoList from './TodoList';
 import { addTodo } from './store';
+import {installTodos} from "./store";
 
 const App = ({ todos, setTodos, addTodo }) => {
 
@@ -11,7 +12,7 @@ const App = ({ todos, setTodos, addTodo }) => {
 
   useEffect(() => {
     getTodos()
-      .then(todos => {
+      .then((todos) => {
         setTodos(todos);
       });
   }, []);
@@ -31,17 +32,16 @@ const App = ({ todos, setTodos, addTodo }) => {
         Todo APP with Redux
         ({activeTodos.length})
       </h1>
-      <div>
-        <form onSubmit={handleAddTodo}>
-          <input
-            type='text'
-            placeholder='Enter new todo'
-            value={value}
-            onChange={(event) => changeAddTodo(event.target.value)}
-          />
-          <button onClick={() => handleAddTodo}>Add</button>
-        </form>
-      </div>
+
+      <form onSubmit={handleAddTodo}>
+        <input
+          type='text'
+          placeholder='Enter new todo'
+          value={value}
+          onChange={(event) => changeAddTodo(event.target.value)}
+        />
+        <button onClick={() => handleAddTodo}>Add</button>
+      </form>
 
       <TodoList />
     </main>
@@ -53,10 +53,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setTodos: (todos) => dispatch({
-    type: 'SET_TODOS',
-    payload: todos,
-  }),
+  setTodos: todos => dispatch(installTodos(todos)),
   addTodo: (value) => dispatch(addTodo(value)),
 });
 
