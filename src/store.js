@@ -6,7 +6,7 @@ const initialState = {
 
 const DELETE_TODO = 'DELETE_TODO';
 
-export const deleteTodo = value => ({ type: DELETE_TODO, value });
+export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -18,7 +18,7 @@ const reducer = (state, action) => {
     case DELETE_TODO:
       return {
         ...state,
-        todos: state.todos.filter(todo => todo.id !== action.value),
+        todos: state.todos.filter(todo => todo.id !== action.todoId),
       };
     default:
       return state;
