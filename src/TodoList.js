@@ -1,18 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { toggleTodo } from './store';
 
-const TodoList = ({ todos, setTodos }) => {
-  const toggleTodo = (todoId) => {
-    const newTodos = todos.map(todo => {
-      return (todoId !== todo.id)
-        ? todo
-        : { ...todo, completed: !todo.completed };
-    });
-
-    setTodos(newTodos);
-  };
-
+const TodoList = ({ todos, setTodos, toggleTodoHandler }) => {
   return (
     <div className="TodoList">
       <strong>Todos:</strong>
@@ -24,7 +15,7 @@ const TodoList = ({ todos, setTodos }) => {
               <input
                 type="checkbox"
                 checked={todo.completed}
-                onChange={() => toggleTodo(todo.id)}
+                onChange={() => toggleTodoHandler(todo.id)}
               />
 
               {todo.title}
@@ -36,25 +27,22 @@ const TodoList = ({ todos, setTodos }) => {
   );
 };
 
-const mapState = (state) => ({
+const mapState = state => ({
   todos: state.todos,
 });
 
-const mapDispatch = (dispatch) => ({
-  setTodos: (todos) => dispatch({
+const mapDispatch = dispatch => ({
+  setTodos: todos => dispatch({
     type: 'SET_TODOS',
     payload: todos,
   }),
+  toggleTodoHandler: payload => dispatch(toggleTodo(payload)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
 
-
-
-
-
-
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  toggleTodo: PropTypes.func.isRequired
+  toggleTodoHandler: PropTypes.func.isRequired,
+  setTodos: PropTypes.func.isRequired,
 };

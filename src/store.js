@@ -1,5 +1,11 @@
 import { createStore } from 'redux';
 
+const TOGGLE_TODO = 'TOGGLE_TODO';
+
+export function toggleTodo(payload) {
+  return { type: TOGGLE_TODO, payload };
+}
+
 const initialState = {
   todos: [],
 };
@@ -15,11 +21,26 @@ const reducer = (state, action) => {
         ...state,
         todos: action.payload,
       };
+
+    case TOGGLE_TODO: {
+      const newTodos = state.todos.map(todo => (
+        (action.payload !== todo.id)
+          ? todo
+          : { ...todo, completed: !todo.completed }
+      ));
+
+      return {
+        ...state,
+        todos: newTodos,
+      };
+    }
+
     case DELETE_TODO:
       return {
         ...state,
         todos: state.todos.filter(todo => todo.id !== action.todoId),
       };
+
     default:
       return state;
   }
