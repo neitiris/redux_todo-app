@@ -1,22 +1,30 @@
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
 
-const initialState = {
-  todos: [],
-};
+// const initialState = {
+//   todos: [],
+// };
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_TODOS':
-      return {
-        ...state,
-        todos: action.payload,
-      };
+// const DELETE_TODO = 'DELETE_TODO';
+// export const deleteTodo = (value) => ({type: DELETE_TODO, value });
 
-    default:
-      return state;
-  }
-};
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case 'SET_TODOS':
+//       return {
+//         ...state,
+//         todos: action.payload,
+//       };
+//       case DELETE_TODO:
+//         return {
+//           ...state,
+//           todos: state.todos.filter(todo => todo.id !== action.value),
+//         };
 
-const store = createStore(reducer, initialState);
+//     default:
+//       return state;
+//   }
+// };
 
-export default store;
+// const store = createStore(reducer, initialState);
+
+// export default store;
