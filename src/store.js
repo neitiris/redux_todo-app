@@ -1,8 +1,24 @@
 import { createStore } from 'redux';
 
+const ADD_TODO = 'ADD_TODO';
+
 const initialState = {
   todos: [],
 };
+
+//actions
+export function addTodo(value) {
+  
+  return {
+    type: ADD_TODO,
+    value: {
+      id: Date.now(),
+      title: value,
+      completed: false,
+    },
+  }
+}
+//
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -11,6 +27,11 @@ const reducer = (state, action) => {
         ...state,
         todos: action.payload,
       };
+    case ADD_TODO:
+      return {
+        ...state,
+        todos: [...state.todos, action.value],
+      };
 
     default:
       return state;
@@ -18,9 +39,5 @@ const reducer = (state, action) => {
 };
 
 const store = createStore(reducer, initialState);
-
-store.subscribe(() => {
-  console.log(store.getState());
-});
 
 export default store;

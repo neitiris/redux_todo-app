@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { getTodos } from './api';
 import TodoList from './TodoList';
+import { addTodo } from './store';
 
-const App = ({ todosFromStore, setTodos }) => {
+const App = ({ todos, setTodos, addTodo }) => {
+
+  const [value, changeAddTodo] = useState('');
+
   useEffect(() => {
     getTodos()
       .then(todos => {
@@ -12,30 +16,40 @@ const App = ({ todosFromStore, setTodos }) => {
       });
   }, []);
 
-  const toggleTodo = (todoId) => {
-    const newTodos = todosFromStore.map(todo => {
-      return (todoId !== todo.id)
-        ? todo
-        : { ...todo, completed: !todo.completed };
-    });
+  const handleAddTodo = (event) => {
+    event.preventDefault();
 
-    setTodos(newTodos);
-  };
+    addTodo(value);
+    changeAddTodo('');
+  }
+
+  const activeTodos = todos.filter(todo => !todo.completed);
 
   return (
     <main className="App">
-      <h1>Todo APP with Redux</h1>
+      <h1>
+        Todo APP with Redux
+        ({activeTodos.length})
+      </h1>
+      <div>
+        <form onSubmit={handleAddTodo}>
+          <input
+            type='text'
+            placeholder='Enter new todo'
+            value={value}
+            onChange={(event) => changeAddTodo(event.target.value)}
+          />
+          <button onClick={() => handleAddTodo}>Add</button>
+        </form>
+      </div>
 
-      <TodoList
-        todos={todosFromStore}
-        toggleTodo={toggleTodo}
-      />
+      <TodoList />
     </main>
   );
 };
 
 const mapStateToProps = (state) => ({
-  todosFromStore: state.todos,
+  todos: state.todos,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -43,22 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'SET_TODOS',
     payload: todos,
   }),
+  addTodo: (value) => dispatch(addTodo(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-// //
-// const [todos, setTodos] = useState([]);
-// //
-// state = {
-//   todos: []
-// };
-//
-// const todos = this.state.todos;
-//
-// const setTodos = (newTodos) => {
-//   this.setState({
-//     todos: newTodos,
-//   });
-// };
