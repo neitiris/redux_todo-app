@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { installTodos } from './store'
 
 const TodoList = ({ todos, setTodos }) => {
   const toggleTodo = (todoId) => {
-    const newTodos = todos.map(todo => {
-      return (todoId !== todo.id)
-        ? todo
-        : { ...todo, completed: !todo.completed };
-    });
+    const newTodos = todos.map(todo => ((todoId !== todo.id)
+      ? todo
+      : { ...todo, completed: !todo.completed }));
 
     setTodos(newTodos);
   };
@@ -36,25 +35,17 @@ const TodoList = ({ todos, setTodos }) => {
   );
 };
 
-const mapState = (state) => ({
+const mapState = state => ({
   todos: state.todos,
 });
 
-const mapDispatch = (dispatch) => ({
-  setTodos: (todos) => dispatch({
-    type: 'SET_TODOS',
-    payload: todos,
-  }),
+const mapDispatch = dispatch => ({
+  setTodos: todos => dispatch(installTodos(todos)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
 
-
-
-
-
-
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  toggleTodo: PropTypes.func.isRequired
+  toggleTodo: PropTypes.func.isRequired,
 };
