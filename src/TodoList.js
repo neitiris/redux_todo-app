@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleTodo } from './store';
 
-const TodoList = ({ todos, setTodos, toggleTodoHandler }) => {
+const TodoList = ({ todos, toggleTodoHandler }) => {
   return (
     <div className="TodoList">
       <strong>Todos:</strong>
@@ -32,10 +32,6 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  setTodos: todos => dispatch({
-    type: 'SET_TODOS',
-    payload: todos,
-  }),
   toggleTodoHandler: payload => dispatch(toggleTodo(payload)),
 });
 
@@ -44,5 +40,4 @@ export default connect(mapState, mapDispatch)(TodoList);
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleTodoHandler: PropTypes.func.isRequired,
-  setTodos: PropTypes.func.isRequired,
 };

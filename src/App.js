@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 
 import { getTodos } from './api';
 import TodoList from './TodoList';
+import {installTodos} from "./store";
+
+
 
 const App = ({ todos, setTodos }) => {
   useEffect(() => {
     getTodos()
-      .then(todos => {
+      .then((todos) => {
         setTodos(todos);
       });
   }, []);
@@ -18,7 +21,9 @@ const App = ({ todos, setTodos }) => {
     <main className="App">
       <h1>
         Todo APP with Redux
-        ({activeTodos.length})
+        (
+        {activeTodos.length}
+)
       </h1>
 
       <TodoList />
@@ -26,31 +31,12 @@ const App = ({ todos, setTodos }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   todos: state.todos,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setTodos: (todos) => dispatch({
-    type: 'SET_TODOS',
-    payload: todos,
-  }),
+const mapDispatchToProps = dispatch => ({
+  setTodos: todos => dispatch(installTodos(todos)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-// //
-// const [todos, setTodos] = useState([]);
-// //
-// state = {
-//   todos: []
-// };
-//
-// const todos = this.state.todos;
-//
-// const setTodos = (newTodos) => {
-//   this.setState({
-//     todos: newTodos,
-//   });
-// };
