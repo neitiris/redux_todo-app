@@ -21,8 +21,8 @@ const App = ({ todos, setTodos, addTodo }) => {
     event.preventDefault();
 
     addTodo(value);
-    changeAddTodo('');
-  }
+    setValue('');
+  };
 
   const activeTodos = todos.filter(todo => !todo.completed);
 
