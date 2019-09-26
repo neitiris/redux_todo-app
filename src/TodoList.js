@@ -41,12 +41,8 @@ const mapDispatch = dispatch => ({
 
 export default connect(mapState, mapDispatch)(TodoList);
 
-
-
-
-
-
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // toggleTodo: PropTypes.func.isRequired
+  toggleTodoHandler: PropTypes.func.isRequired,
+  setTodos: PropTypes.func.isRequired,
 };

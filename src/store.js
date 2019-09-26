@@ -19,11 +19,11 @@ const reducer = (state, action) => {
       };
 
     case TOGGLE_TODO: {
-      const newTodos = state.todos.map(todo =>
+      const newTodos = state.todos.map(todo => (
         (action.payload !== todo.id)
           ? todo
           : { ...todo, completed: !todo.completed }
-      );
+      ));
 
       return {
         ...state,
