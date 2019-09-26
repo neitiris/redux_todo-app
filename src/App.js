@@ -7,8 +7,8 @@ import TodoList from './TodoList';
 const App = ({ todos, setTodos }) => {
   useEffect(() => {
     getTodos()
-      .then(todos => {
-        setTodos(todos);
+      .then((todosFromServer) => {
+        setTodos(todosFromServer);
       });
   }, []);
 
@@ -19,6 +19,7 @@ const App = ({ todos, setTodos }) => {
       <h1>
         Todo APP with Redux
         ({activeTodos.length})
+
       </h1>
 
       <TodoList />
@@ -38,7 +39,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
 
 // //
 // const [todos, setTodos] = useState([]);

@@ -5,8 +5,10 @@ const initialState = {
 };
 
 const DELETE_TODO = 'DELETE_TODO';
+const SET_TODOS = 'SET_TODOS';
 
 export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
+export const setTodos = todos => ({ type: SET_TODOS, todos });
 
 const reducer = (state, action) => {
   switch (action.type) {

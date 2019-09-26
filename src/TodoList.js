@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteTodo, setTodos } from './store';
 
-const TodoList = ({ todos, setTodos }) => {
+const TodoList = ({ todos, setTodos, deleteTodo }) => {
   const toggleTodo = (todoId) => {
     const newTodos = todos.map(todo => {
       return (todoId !== todo.id)
@@ -29,6 +30,7 @@ const TodoList = ({ todos, setTodos }) => {
 
               {todo.title}
             </label>
+            <button type="button" onClick={() => deleteTodo(todo.id)}>x</button>
           </li>
         ))}
       </ul>
@@ -41,10 +43,8 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  setTodos: (todos) => dispatch({
-    type: 'SET_TODOS',
-    payload: todos,
-  }),
+  deleteTodo: (id) => dispatch(deleteTodo(id)),
+  setTodos: (play) => dispatch(setTodos(play)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
