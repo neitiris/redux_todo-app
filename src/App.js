@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getTodos } from './api';
 import TodoList from './TodoList';
 
-const App = ({ todosFromStore, setTodos }) => {
+const App = ({ todos, setTodos }) => {
   useEffect(() => {
     getTodos()
       .then(todos => {
@@ -12,30 +12,22 @@ const App = ({ todosFromStore, setTodos }) => {
       });
   }, []);
 
-  const toggleTodo = (todoId) => {
-    const newTodos = todosFromStore.map(todo => {
-      return (todoId !== todo.id)
-        ? todo
-        : { ...todo, completed: !todo.completed };
-    });
-
-    setTodos(newTodos);
-  };
+  const activeTodos = todos.filter(todo => !todo.completed);
 
   return (
     <main className="App">
-      <h1>Todo APP with Redux</h1>
+      <h1>
+        Todo APP with Redux
+        ({activeTodos.length})
+      </h1>
 
-      <TodoList
-        todos={todosFromStore}
-        toggleTodo={toggleTodo}
-      />
+      <TodoList />
     </main>
   );
 };
 
 const mapStateToProps = (state) => ({
-  todosFromStore: state.todos,
+  todos: state.todos,
 });
 
 const mapDispatchToProps = (dispatch) => ({
