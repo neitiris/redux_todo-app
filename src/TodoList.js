@@ -3,9 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as todoActions from './store';
-import { deleteTodo } from './store';
+import { deletedTodo } from './store';
 
-const TodoList = ({ todos, toggleTodo, deletedTodo }) => (
+const TodoList = ({ todos, toggleTodo, deleteTodo }) => (
   <div className="TodoList">
     <strong>Todos:</strong>
 
@@ -23,7 +23,7 @@ const TodoList = ({ todos, toggleTodo, deletedTodo }) => (
           </label>
           <button
             type="button"
-            onClick={() => deletedTodo(todo.id)}
+            onClick={() => deleteTodo(todo.id)}
           >
             x
           </button>
@@ -38,7 +38,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  deletedTodo: todoId => dispatch(deleteTodo(todoId)),
+  deleteTodo: todoId => dispatch(deletedTodo(todoId)),
   toggleTodo: todoId => dispatch(todoActions.toggleTodo(todoId)),
 });
 
@@ -47,5 +47,5 @@ export default connect(mapState, mapDispatch)(TodoList);
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleTodo: PropTypes.func.isRequired,
-  deletedTodo: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired,
 };
