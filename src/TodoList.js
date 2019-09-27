@@ -1,9 +1,7 @@
-/* eslint-disable import/no-duplicates */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as todoActions from './store';
-import { deletedTodo } from './store';
 
 const TodoList = ({ todos, toggleTodo, deleteTodo }) => (
   <div className="TodoList">
@@ -38,7 +36,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  deleteTodo: todoId => dispatch(deletedTodo(todoId)),
+  deleteTodo: todoId => dispatch(todoActions.deleteTodo(todoId)),
   toggleTodo: todoId => dispatch(todoActions.toggleTodo(todoId)),
 });
 
