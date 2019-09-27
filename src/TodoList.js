@@ -1,6 +1,4 @@
 /* eslint-disable import/no-duplicates */
-/* eslint-disable react/prop-types */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -49,4 +47,5 @@ export default connect(mapState, mapDispatch)(TodoList);
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleTodo: PropTypes.func.isRequired,
+  deletedTodo: PropTypes.func.isRequired,
 };

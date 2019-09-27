@@ -1,4 +1,3 @@
-/* eslint-disable no-fallthrough */
 import { createStore } from 'redux';
 
 const SET_TODOS = 'SET_TODOS';
