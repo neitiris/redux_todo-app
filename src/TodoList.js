@@ -11,7 +11,6 @@ const TodoList = ({ todos, toggleTodo }) => (
     <ul className="TodoList__list">
       {todos.map(todo => (
         <li key={todo.id} className="TodoList__item">
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label>
             <input
               type="checkbox"
