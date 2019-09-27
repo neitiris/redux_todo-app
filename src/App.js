@@ -1,25 +1,28 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getTodos } from './api';
+import * as todoActions from './store';
 import TodoList from './TodoList';
-import { installTodos, addTodo } from './store';
 
-const App = ({ todos, setTodos, addTodos }) => {
-  const [value, setValue] = useState('');
+const App = ({ todos, setTodos, addTodo }) => {
+  const [newTodoTitle, setNewTodoTitle] = useState('');
 
   useEffect(() => {
     getTodos()
-      .then((todosFromServer) => {
-        setTodos(todosFromServer);
-      });
+      .then(setTodos);
   }, []);
 
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    addTodos(value);
-    setValue('');
+    addTodo(newTodoTitle);
+    setNewTodoTitle('');
+  };
+
+  const handleNewTitleChange = (event) => {
+    setNewTodoTitle(event.target.value);
   };
 
   const activeTodos = todos.filter(todo => !todo.completed);
@@ -27,15 +30,15 @@ const App = ({ todos, setTodos, addTodos }) => {
   return (
     <main className="App">
       <h1>
-        Todo APP with Redux
+        Todo APP with Redux:
         {activeTodos.length}
       </h1>
       <form onSubmit={handleAddTodo}>
         <input
           type="text"
           placeholder="Enter new todo"
-          value={value}
-          onChange={event => setValue(event.target.value)}
+          value={newTodoTitle}
+          onChange={handleNewTitleChange}
         />
         <button type="submit">Add</button>
       </form>
@@ -50,8 +53,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setTodos: todos => dispatch(installTodos(todos)),
-  addTodos: value => dispatch(addTodo(value)),
+  setTodos: todos => dispatch(todoActions.setTodos(todos)),
+  addTodo: value => dispatch(todoActions.addTodo(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+App.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addTodo: PropTypes.func.isRequired,
+  setTodos: PropTypes.func.isRequired,
+};
