@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteTodo, setTodos } from './store';
+import { deleteTodo } from './store';
 
 const TodoList = ({ todos, setTodos, deleteTodo }) => {
   const toggleTodo = (todoId) => {
-    const newTodos = todos.map(todo => {
+    const newTodos = todos.map((todo) => {
       return (todoId !== todo.id)
         ? todo
         : { ...todo, completed: !todo.completed };
@@ -44,7 +44,6 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   deleteTodo: (id) => dispatch(deleteTodo(id)),
-  setTodos: (play) => dispatch(setTodos(play)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);

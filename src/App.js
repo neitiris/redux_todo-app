@@ -39,18 +39,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// //
-// const [todos, setTodos] = useState([]);
-// //
-// state = {
-//   todos: []
-// };
-//
-// const todos = this.state.todos;
-//
-// const setTodos = (newTodos) => {
-//   this.setState({
-//     todos: newTodos,
-//   });
-// };
