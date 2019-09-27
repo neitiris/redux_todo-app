@@ -1,23 +1,24 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getTodos } from './api';
 import TodoList from './TodoList';
-import {installTodos, addTodo} from "./store";
+import { installTodos, addTodo } from './store';
 
-const App = ({ todos, setTodos, addTodo }) => {
+const App = ({ todos, setTodo, addTodos }) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
     getTodos()
       .then((todosFromServer) => {
-        setTodos(todosFromServer)
+        setTodo(todosFromServer);
       });
   }, []);
 
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    addTodo(value);
+    addTodos(value);
     setValue('');
   };
 
@@ -27,18 +28,16 @@ const App = ({ todos, setTodos, addTodo }) => {
     <main className="App">
       <h1>
         Todo APP with Redux
-        ({activeTodos.length})
-
+        {activeTodos.length}
       </h1>
-
       <form onSubmit={handleAddTodo}>
         <input
-          type='text'
-          placeholder='Enter new todo'
+          type="text"
+          placeholder="Enter new todo"
           value={value}
-          onChange={(event) => setValue(event.target.value)}
+          onChange={event => setValue(event.target.value)}
         />
-        <button type='submit'>Add</button>
+        <button type="submit">Add</button>
       </form>
 
       <TodoList />
@@ -46,13 +45,13 @@ const App = ({ todos, setTodos, addTodo }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   todos: state.todos,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setTodos: todos => dispatch(installTodos(todos)),
-  addTodo: (value) => dispatch(addTodo(value)),
+const mapDispatchToProps = dispatch => ({
+  setTodo: todos => dispatch(installTodos(todos)),
+  addTodos: value => dispatch(addTodo(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

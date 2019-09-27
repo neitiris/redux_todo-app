@@ -5,26 +5,21 @@ const DELETE_TODO = 'DELETE_TODO';
 const SET_TODOS = 'SET_TODOS';
 const TOGGLE_TODO = 'TOGGLE_TODO';
 
-export const installTodos = (todos) => ({
+export const installTodos = todos => ({
   type: SET_TODOS,
   todos,
 });
 export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
 export const setTodos = todos => ({ type: SET_TODOS, todos });
-export function toggleTodoHandler(payload) {
-  return { type: TOGGLE_TODO, payload };
-}
-export function addTodo(value) {
-
-  return {
-    type: ADD_TODO,
-    value: {
-      id: Date.now(),
-      title: value,
-      completed: false,
-    },
-  }
-}
+export const toggleTodoHandler = todoId => ({ type: TOGGLE_TODO, todoId });
+export const addTodo = value => ({
+  type: ADD_TODO,
+  value: {
+    id: Date.now(),
+    title: value,
+    completed: false,
+  },
+});
 
 const initialState = {
   todos: [],
@@ -41,7 +36,7 @@ const reducer = (state, action) => {
 
     case TOGGLE_TODO: {
       const newTodos = state.todos.map(todo => (
-        (action.payload !== todo.id)
+        (action.todoId !== todo.id)
           ? todo
           : { ...todo, completed: !todo.completed }
       ));
