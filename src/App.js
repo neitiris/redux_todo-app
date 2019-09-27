@@ -5,13 +5,13 @@ import { getTodos } from './api';
 import TodoList from './TodoList';
 import { installTodos, addTodo } from './store';
 
-const App = ({ todos, setTodo, addTodos }) => {
+const App = ({ todos, setTodos, addTodos }) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
     getTodos()
       .then((todosFromServer) => {
-        setTodo(todosFromServer);
+        setTodos(todosFromServer);
       });
   }, []);
 
@@ -50,7 +50,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setTodo: todos => dispatch(installTodos(todos)),
+  setTodos: todos => dispatch(installTodos(todos)),
   addTodos: value => dispatch(addTodo(value)),
 });
 

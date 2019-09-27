@@ -25,7 +25,7 @@ const TodoList = ({ todos, deletedTodo, toggleTodosHandler }) => (
             type="button"
             onClick={() => deletedTodo(todo.id)}
           >
-                x
+            x
           </button>
         </li>
       ))}
