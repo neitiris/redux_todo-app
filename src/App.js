@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import { getTodos } from './api';
 import * as todoActions from './store';
-
 import TodoList from './TodoList';
 
 const App = ({ todos, setTodos, addTodo }) => {
@@ -34,7 +32,6 @@ const App = ({ todos, setTodos, addTodo }) => {
         Todo APP with Redux:
         {activeTodos.length}
       </h1>
-
       <form onSubmit={handleAddTodo}>
         <input
           type="text"
