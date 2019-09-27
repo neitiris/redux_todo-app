@@ -8,7 +8,7 @@ const DELETE_TODO = 'DELETE_TODO';
 export const setTodos = todos => ({ type: SET_TODOS, todos });
 export const addTodo = title => ({ type: ADD_TODO, title });
 export const toggleTodo = todoId => ({ type: TOGGLE_TODO, todoId });
-export const deletedTodo = todoId => ({ type: DELETE_TODO, todoId });
+export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
 
 const initialState = {
   todos: [],
