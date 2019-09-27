@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { getTodos } from './api';
+import * as todoActions from './store';
+
 import TodoList from './TodoList';
-import { addTodo } from './store';
-import {installTodos} from "./store";
 
 const App = ({ todos, setTodos, addTodo }) => {
-
-  const [value, setValue] = useState('');
+  const [newTodoTitle, setNewTodoTitle] = useState('');
 
   useEffect(() => {
     getTodos()
-      .then((todos) => {
-        setTodos(todos);
-      });
+      .then(setTodos);
   }, []);
 
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    addTodo(value);
-    setValue('');
+    addTodo(newTodoTitle);
+    setNewTodoTitle('');
+  };
+
+  const handleNewTitleChange = (event) => {
+    setNewTodoTitle(event.target.value);
   };
 
   const activeTodos = todos.filter(todo => !todo.completed);
@@ -29,18 +31,18 @@ const App = ({ todos, setTodos, addTodo }) => {
   return (
     <main className="App">
       <h1>
-        Todo APP with Redux
-        ({activeTodos.length})
+        Todo APP with Redux:
+        {activeTodos.length}
       </h1>
 
       <form onSubmit={handleAddTodo}>
         <input
-          type='text'
-          placeholder='Enter new todo'
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
+          type="text"
+          placeholder="Enter new todo"
+          value={newTodoTitle}
+          onChange={handleNewTitleChange}
         />
-        <button type='submit'>Add</button>
+        <button type="submit">Add</button>
       </form>
 
       <TodoList />
@@ -48,13 +50,19 @@ const App = ({ todos, setTodos, addTodo }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   todos: state.todos,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setTodos: todos => dispatch(installTodos(todos)),
-  addTodo: (value) => dispatch(addTodo(value)),
+const mapDispatchToProps = dispatch => ({
+  setTodos: todos => dispatch(todoActions.setTodos(todos)),
+  addTodo: value => dispatch(todoActions.addTodo(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+App.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addTodo: PropTypes.func.isRequired,
+  setTodos: PropTypes.func.isRequired,
+};
