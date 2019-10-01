@@ -14,7 +14,7 @@ const initialState = {
   todos: [],
 };
 
-const reducer = (state, action) => {
+export const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_TODOS:
       return { ...state, todos: action.todos };

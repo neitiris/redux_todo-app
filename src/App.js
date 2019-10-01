@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getTodos } from './api';
+import * as todoApi from './todoApi';
 import * as todoActions from './store';
 import TodoList from './TodoList';
 
-const App = ({ todos, setTodos, addTodo }) => {
+const App = ({ activeTodos, setTodos, addTodo }) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
   useEffect(() => {
-    getTodos()
+    todoApi.getTodos()
       .then(setTodos);
   }, []);
 
@@ -23,8 +23,6 @@ const App = ({ todos, setTodos, addTodo }) => {
   const handleNewTitleChange = (event) => {
     setNewTodoTitle(event.target.value);
   };
-
-  const activeTodos = todos.filter(todo => !todo.completed);
 
   return (
     <main className="App">
@@ -48,7 +46,7 @@ const App = ({ todos, setTodos, addTodo }) => {
 };
 
 const mapStateToProps = state => ({
-  todos: state.todos,
+  activeTodos: state.todos.filter(todo => !todo.completed),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -59,7 +57,7 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 App.propTypes = {
-  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  activeTodos: PropTypes.arrayOf(PropTypes.object).isRequired,
   addTodo: PropTypes.func.isRequired,
   setTodos: PropTypes.func.isRequired,
 };
