@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as todoActions from './store';
+import * as todoActions from './redux/todos';
 
 const TodoList = ({ todos, toggleTodo, deleteTodo }) => (
   <div className="TodoList">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as todoApi from './todoApi';
-import * as todoActions from './store';
+import * as todoActions from './redux/todos';
 import TodoList from './TodoList';
 
 const App = ({ activeTodos, setTodos, addTodo }) => {
