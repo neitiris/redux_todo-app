@@ -59,7 +59,7 @@ const todosReducer = (todos = [], action = {}) => {
       const copyTodos = [...todos];
       const i = copyTodos.findIndex(todo => todo.id === action.todoId);
 
-      if (copyTodos[i] === copyTodos[copyTodos.length - 1]) {
+      if (i === todos.length - 1) {
         return copyTodos;
       }
 
