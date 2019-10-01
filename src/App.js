@@ -6,7 +6,7 @@ import * as todoActions from './redux/todos';
 import * as loadingAction from './redux/loading';
 import TodoList from './TodoList';
 
-const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading }) => {
+const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading, isLoading}) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading }) 
         {activeTodos.length}
       </h1>
 
-      {activeTodos.length
+      {!isLoading
         ? <>
             <form onSubmit={handleAddTodo}>
               <input
@@ -49,7 +49,7 @@ const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading }) 
 
             <TodoList />
           </>
-        : <p>Loading</p>
+        : <h1>Loading</h1>
       }
     </main>
   );
@@ -57,6 +57,7 @@ const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading }) 
 
 const mapStateToProps = state => ({
   activeTodos: state.todos.filter(todo => !todo.completed),
+  isLoading: state.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({

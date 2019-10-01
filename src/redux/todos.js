@@ -41,7 +41,7 @@ const todosReducer = (todos = [], action = {}) => {
     case SET_ORDER:
       return todos
         .filter(todo => todo.id !== action.todoId)
-        .splice(i, 0, todos.find(todo => todo.id === action.todoId));
+        .splice(action.i, 0, todos.find(todo => todo.id === action.todoId));
 
     case DELETE_TODO:
       return todos
