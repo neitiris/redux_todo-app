@@ -39,7 +39,6 @@ const App = ({ activeTodos, setTodos, addTodo }) => {
         />
         <button type="submit">Add</button>
       </form>
-
       <TodoList />
     </main>
   );
