@@ -7,7 +7,12 @@ import * as loadingAction from './redux/loading';
 import TodoList from './TodoList';
 
 const App = ({
-  activeTodos, setTodos, addTodo, enableLoading, disableLoading, isLoading,
+  activeTodos,
+  setTodos,
+  addTodo,
+  enableLoading,
+  disableLoading,
+  isLoading,
 }) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
@@ -79,5 +84,5 @@ App.propTypes = {
   setTodos: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,
-  isLoading: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
