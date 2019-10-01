@@ -5,6 +5,7 @@ const TOGGLE_TODO = 'TOGGLE_TODO';
 const DELETE_TODO = 'DELETE_TODO';
 const PLACE_FIRST = 'PLACE_FIRST';
 const MOVE_UP = 'MOVE_UP';
+const MOVE_DOWN = 'MOVE_DOWN';
 const PLACE_LAST = 'PLACE_LAST_TODO';
 const SET_ORDER = 'SET_ORDER';
 
@@ -14,6 +15,7 @@ export const toggleTodo = todoId => ({ type: TOGGLE_TODO, todoId });
 export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
 export const placeFirst = todoId => ({ type: PLACE_FIRST, todoId });
 export const moveUp = todo => ({ type: MOVE_UP, todo });
+export const moveDown = todoId => ({ type: MOVE_DOWN, todoId });
 export const placeLastTodo = todoId => ({ type: PLACE_LAST, todoId });
 export const setOrder = (todoId, i) => ({ type: SET_ORDER, todoId, i });
 
@@ -60,6 +62,22 @@ const todosReducer = (todos = [], action = {}) => {
       newTodos[currentPosition - 1] = action.todo;
 
       return newTodos;
+    }
+
+    case MOVE_DOWN: {
+      const copyTodos = [...todos];
+      const i = copyTodos.findIndex(todo => todo.id === action.todoId);
+
+      if (i === todos.length - 1) {
+        return copyTodos;
+      }
+
+      const temp = copyTodos[i];
+
+      copyTodos[i] = copyTodos[i + 1];
+      copyTodos[i + 1] = temp;
+
+      return copyTodos;
     }
 
     case PLACE_LAST:

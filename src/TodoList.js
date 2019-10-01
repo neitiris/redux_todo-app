@@ -9,6 +9,7 @@ const TodoList = ({
   deleteTodo,
   placeFirst,
   moveUp,
+  moveDown,
   placeLastTodo,
 }) => (
   <div className="TodoList">
@@ -41,6 +42,13 @@ const TodoList = ({
 
           <button
             type="button"
+            onClick={() => moveDown(todo.id)}
+          >
+            Move down
+          </button>
+
+          <button
+            type="button"
             onClick={() => placeLastTodo(todo.id)}
           >
             Move to the end
@@ -67,6 +75,7 @@ const mapDispatch = dispatch => ({
   toggleTodo: todoId => dispatch(todoActions.toggleTodo(todoId)),
   placeFirst: todoId => dispatch(todoActions.placeFirst(todoId)),
   moveUp: todo => dispatch(todoActions.moveUp(todo)),
+  moveDown: todoId => dispatch(todoActions.moveDown(todoId)),
   placeLastTodo: todoId => dispatch(todoActions.placeLastTodo(todoId)),
 });
 
@@ -77,6 +86,7 @@ TodoList.propTypes = {
   toggleTodo: PropTypes.func.isRequired,
   moveUp: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
+  moveDown: PropTypes.func.isRequired,
   placeLastTodo: PropTypes.func.isRequired,
   placeFirst: PropTypes.func.isRequired,
 };
