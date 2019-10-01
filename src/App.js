@@ -3,14 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as todoApi from './todoApi';
 import * as todoActions from './redux/todos';
+import * as loadingAction from './redux/loading';
 import TodoList from './TodoList';
 
-const App = ({ activeTodos, setTodos, addTodo }) => {
+const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading }) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
   useEffect(() => {
+    enableLoading()
+
     todoApi.getTodos()
-      .then(setTodos);
+      .then(setTodos)
+      .finally(disableLoading);
   }, []);
 
   const handleAddTodo = (event) => {
@@ -30,17 +34,23 @@ const App = ({ activeTodos, setTodos, addTodo }) => {
         Todo APP with Redux:
         {activeTodos.length}
       </h1>
-      <form onSubmit={handleAddTodo}>
-        <input
-          type="text"
-          placeholder="Enter new todo"
-          value={newTodoTitle}
-          onChange={handleNewTitleChange}
-        />
-        <button type="submit">Add</button>
-      </form>
 
-      <TodoList />
+      {activeTodos.length
+        ? <>
+            <form onSubmit={handleAddTodo}>
+              <input
+                type="text"
+                placeholder="Enter new todo"
+                value={newTodoTitle}
+                onChange={handleNewTitleChange}
+              />
+              <button type="submit">Add</button>
+            </form>
+
+            <TodoList />
+          </>
+        : <p>Loading</p>
+      }
     </main>
   );
 };
@@ -52,6 +62,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setTodos: todos => dispatch(todoActions.setTodos(todos)),
   addTodo: value => dispatch(todoActions.addTodo(value)),
+  enableLoading: () => dispatch(loadingAction.enableLoading()),
+  disableLoading: () => dispatch(loadingAction.disableLoading()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
