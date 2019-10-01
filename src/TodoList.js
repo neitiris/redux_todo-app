@@ -26,7 +26,7 @@ const TodoList = ({
           </label>
           <button
             type="button"
-            onClick={() => moveUp(todo.id)}
+            onClick={() => moveUp(todo)}
           >
             Move up
           </button>

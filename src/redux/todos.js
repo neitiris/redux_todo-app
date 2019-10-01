@@ -8,7 +8,7 @@ const DELETE_TODO = 'DELETE_TODO';
 export const setTodos = todos => ({ type: SET_TODOS, todos });
 export const addTodo = title => ({ type: ADD_TODO, title });
 export const toggleTodo = todoId => ({ type: TOGGLE_TODO, todoId });
-export const moveUp = todoId => ({ type: MOVE_UP, todoId });
+export const moveUp = todo => ({ type: MOVE_UP, todo });
 export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
 
 const todosReducer = (todos = [], action = {}) => {
@@ -30,8 +30,21 @@ const todosReducer = (todos = [], action = {}) => {
           : { ...todo, completed: !todo.completed }
       ));
 
-    case MOVE_UP:
-      return {};
+    case MOVE_UP: {
+      const currentPosition = todos
+        .findIndex(todo => todo.id === action.todo.id);
+
+      if (currentPosition === 0) {
+        return todos;
+      }
+
+      const newTodos = [...todos];
+
+      newTodos[currentPosition] = newTodos[currentPosition - 1];
+      newTodos[currentPosition - 1] = action.todo;
+
+      return newTodos;
+    }
 
     case DELETE_TODO:
       return todos
