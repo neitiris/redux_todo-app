@@ -6,11 +6,13 @@ import * as todoActions from './redux/todos';
 import * as loadingAction from './redux/loading';
 import TodoList from './TodoList';
 
-const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading, isLoading}) => {
+const App = ({
+  activeTodos, setTodos, addTodo, enableLoading, disableLoading, isLoading,
+}) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
   useEffect(() => {
-    enableLoading()
+    enableLoading();
 
     todoApi.getTodos()
       .then(setTodos)
@@ -36,7 +38,8 @@ const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading, is
       </h1>
 
       {!isLoading
-        ? <>
+        ? (
+          <>
             <form onSubmit={handleAddTodo}>
               <input
                 type="text"
@@ -49,6 +52,7 @@ const App = ({ activeTodos, setTodos, addTodo, enableLoading, disableLoading, is
 
             <TodoList />
           </>
+        )
         : <h1>Loading</h1>
       }
     </main>
@@ -73,4 +77,7 @@ App.propTypes = {
   activeTodos: PropTypes.arrayOf(PropTypes.object).isRequired,
   addTodo: PropTypes.func.isRequired,
   setTodos: PropTypes.func.isRequired,
+  enableLoading: PropTypes.func.isRequired,
+  disableLoading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as todoActions from './redux/todos';
 
 const TodoList = ({
-  todos, toggleTodo, deleteTodo, placeFirst, placeLastTodo,
+  todos, toggleTodo, deleteTodo, placeFirst, placeLastTodo, moveDown,
 }) => (
   <div className="TodoList">
     <strong>Todos:</strong>
@@ -32,6 +32,7 @@ const TodoList = ({
           >
             x
           </button>
+          <button type="button" onClick={() => moveDown(todo.id)}>down</button>
           <button
             type="button"
             onClick={() => placeLastTodo(todo.id)}
@@ -51,6 +52,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   deleteTodo: todoId => dispatch(todoActions.deleteTodo(todoId)),
   toggleTodo: todoId => dispatch(todoActions.toggleTodo(todoId)),
+  moveDown: todoId => dispatch(todoActions.moveDown(todoId)),
   placeLastTodo: todoId => dispatch(todoActions.placeLastTodo(todoId)),
   placeFirst: todoId => dispatch(todoActions.placeFirst(todoId)),
 });
@@ -61,6 +63,7 @@ TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleTodo: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
+  moveDown: PropTypes.func.isRequired,
   placeLastTodo: PropTypes.func.isRequired,
   placeFirst: PropTypes.func.isRequired,
 };
