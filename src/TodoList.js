@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as todoActions from './redux/todos';
 
-const TodoList = ({ todos, toggleTodo, deleteTodo }) => (
+const TodoList = ({
+  todos, toggleTodo, deleteTodo, placeLastTodo,
+}) => (
   <div className="TodoList">
     <strong>Todos:</strong>
 
@@ -16,7 +18,6 @@ const TodoList = ({ todos, toggleTodo, deleteTodo }) => (
               checked={todo.completed}
               onChange={() => toggleTodo(todo.id)}
             />
-
             {todo.title}
           </label>
           <button
@@ -24,6 +25,12 @@ const TodoList = ({ todos, toggleTodo, deleteTodo }) => (
             onClick={() => deleteTodo(todo.id)}
           >
             x
+          </button>
+          <button
+            type="button"
+            onClick={() => placeLastTodo(todo.id)}
+          >
+            Move to the end
           </button>
         </li>
       ))}
@@ -38,6 +45,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   deleteTodo: todoId => dispatch(todoActions.deleteTodo(todoId)),
   toggleTodo: todoId => dispatch(todoActions.toggleTodo(todoId)),
+  placeLastTodo: todoId => dispatch(todoActions.placeLastTodo(todoId)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
@@ -46,4 +54,5 @@ TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   toggleTodo: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
+  placeLastTodo: PropTypes.func.isRequired,
 };
