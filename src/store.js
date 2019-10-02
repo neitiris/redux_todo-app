@@ -18,8 +18,8 @@ const store = createStore(rootReducer, composeWithDevTools(
 
 export const getIsLoading = state => state.isLoading;
 export const getActiveTodos = state => state.todos
-  .filter(todo => todo.completed);
+  .filter(todo => todo.completed === false);
 export const getCompletedTodos = state => state.todos
-  .filter(todo => todo.completed === true);
+  .filter(todo => todo.completed);
 
 export default store;
