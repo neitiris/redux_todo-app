@@ -66,7 +66,7 @@ const App = ({
 };
 
 const mapStateToProps = state => ({
-  activeTodos: selectors.getTodos(state).filter(todo => !todo.completed),
+  activeTodos: selectors.getActiveTodos(state),
   isLoading: selectors.getIsLoading(state),
 });
 
