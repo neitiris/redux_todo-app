@@ -1,3 +1,5 @@
+import uuidv1 from 'uuid/v1';
+
 const SET_TODOS = 'SET_TODOS';
 const ADD_TODO = 'ADD_TODO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
@@ -29,7 +31,7 @@ const todosReducer = (todos = [], action = {}) => {
 
     case ADD_TODO:
       return [...todos, {
-        id: Date.now(),
+        id: uuidv1('uuid/v1'),
         title: action.title,
         completed: false,
       }];
