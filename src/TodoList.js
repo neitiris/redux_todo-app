@@ -16,30 +16,29 @@ const TodoList = ({
   const [newTitleOfTodo, setNewTitleOfTodo] = useState('');
   const [editedTodoId, setEditedTodoId] = useState('');
 
+  const handleStartEditTodoTitle = (todoId, todoTitle) => {
+    setNewTitleOfTodo(todoTitle);
+    setEditedTodoId(todoId);
+  };
+
+  const handleChangeNewTitle = (event) => {
+    setNewTitleOfTodo(event.target.value);
+  };
+
+  const handleCancelChanges = (todoTitle) => {
+    setNewTitleOfTodo(todoTitle);
+
+    if (todoTitle === newTitleOfTodo) {
+      setEditedTodoId('');
+    }
+  };
+
   const handleSaveNewTitle = (event, todoTitle) => {
     event.preventDefault();
 
     if (newTitleOfTodo && newTitleOfTodo !== todoTitle) {
       renameTodo(editedTodoId, newTitleOfTodo);
       setNewTitleOfTodo('');
-      setEditedTodoId('');
-    }
-  };
-
-  const handleNewTitleChange = (event, todoId) => {
-    setNewTitleOfTodo(event.target.value);
-    setEditedTodoId(todoId);
-  };
-
-  const handleEditedTodo = (todoId, todoTitle) => {
-    setNewTitleOfTodo(todoTitle);
-    setEditedTodoId(todoId);
-  };
-
-  const handleCancel = (todoTitle) => {
-    setNewTitleOfTodo(todoTitle);
-
-    if (todoTitle === newTitleOfTodo) {
       setEditedTodoId('');
     }
   };
@@ -53,7 +52,6 @@ const TodoList = ({
           <li
             key={todo.id}
             className="TodoList__item"
-            onDoubleClick={() => handleEditedTodo(todo.id, todo.title)}
           >
             <label>
               <input
@@ -61,8 +59,13 @@ const TodoList = ({
                 checked={todo.completed}
                 onChange={() => toggleTodo(todo.id)}
               />
-              {todo.title}
             </label>
+            <p onDoubleClick={() => (
+              handleStartEditTodoTitle(todo.id, todo.title)
+            )}
+            >
+              {todo.title}
+            </p>
 
             <form
               onSubmit={event => handleSaveNewTitle(event, todo.title)}
@@ -71,14 +74,14 @@ const TodoList = ({
               <input
                 type="text"
                 value={todo.id === editedTodoId ? newTitleOfTodo : todo.title}
-                onChange={event => handleNewTitleChange(event, todo.id)}
+                onChange={event => handleChangeNewTitle(event)}
               />
 
               <button type="submit">Save</button>
 
               <button
                 type="button"
-                onClick={() => handleCancel(todo.title)}
+                onClick={() => handleCancelChanges(todo.title)}
               >
                 Cancel
               </button>
