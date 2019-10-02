@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as selectors from './store';
 import * as todoActions from './redux/todos';
 
 const TodoList = ({
@@ -26,40 +27,43 @@ const TodoList = ({
             />
             {todo.title}
           </label>
-          <button
-            type="button"
-            onClick={() => placeFirst(todo.id)}
-          >
-            Place First
-          </button>
+          <div>
 
-          <button
-            type="button"
-            onClick={() => moveUp(todo)}
-          >
-            Move up
-          </button>
+            <button
+              type="button"
+              onClick={() => placeFirst(todo.id)}
+            >
+              Place First
+            </button>
 
-          <button
-            type="button"
-            onClick={() => moveDown(todo.id)}
-          >
-            Move down
-          </button>
+            <button
+              type="button"
+              onClick={() => moveUp(todo)}
+            >
+              Move up
+            </button>
 
-          <button
-            type="button"
-            onClick={() => placeLastTodo(todo.id)}
-          >
-            Move to the end
-          </button>
+            <button
+              type="button"
+              onClick={() => moveDown(todo.id)}
+            >
+              Move down
+            </button>
 
-          <button
-            type="button"
-            onClick={() => deleteTodo(todo.id)}
-          >
-            x
-          </button>
+            <button
+              type="button"
+              onClick={() => placeLastTodo(todo.id)}
+            >
+              Move to the end
+            </button>
+
+            <button
+              type="button"
+              onClick={() => deleteTodo(todo.id)}
+            >
+              x
+            </button>
+          </div>
         </li>
       ))}
     </ul>
@@ -67,7 +71,7 @@ const TodoList = ({
 );
 
 const mapState = state => ({
-  todos: state.todos,
+  todos: selectors.getTodos(state),
 });
 
 const mapDispatch = dispatch => ({
