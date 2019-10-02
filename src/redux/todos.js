@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import uuidv1 from 'uuid/v1';
 
 const SET_TODOS = 'SET_TODOS';
 const ADD_TODO = 'ADD_TODO';
@@ -31,7 +31,7 @@ const todosReducer = (todos = [], action = {}) => {
 
     case ADD_TODO:
       return [...todos, {
-        id: uuid('uuid/v1'),
+        id: uuidv1('uuid/v1'),
         title: action.title,
         completed: false,
       }];
