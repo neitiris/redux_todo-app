@@ -1,6 +1,7 @@
 const SET_TODOS = 'SET_TODOS';
 const ADD_TODO = 'ADD_TODO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
+const RENAME_TODO = 'RENAME_TODO';
 const DELETE_TODO = 'DELETE_TODO';
 const MOVE_UP = 'MOVE_UP';
 const MOVE_DOWN = 'MOVE_DOWN';
@@ -11,6 +12,9 @@ const SET_ORDER = 'SET_ORDER';
 export const setTodos = todos => ({ type: SET_TODOS, todos });
 export const addTodo = title => ({ type: ADD_TODO, title });
 export const toggleTodo = todoId => ({ type: TOGGLE_TODO, todoId });
+export const renameTodo = (todoId, newTitle) => (
+  { type: RENAME_TODO, todoId, newTitle }
+);
 export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
 export const placeFirst = todoId => ({ type: PLACE_FIRST, todoId });
 export const moveUp = todo => ({ type: MOVE_UP, todo });
@@ -35,6 +39,13 @@ const todosReducer = (todos = [], action = {}) => {
         (action.todoId !== todo.id)
           ? todo
           : { ...todo, completed: !todo.completed }
+      ));
+
+    case RENAME_TODO:
+      return todos.map(todo => (
+        (action.todoId !== todo.id)
+          ? todo
+          : { ...todo, title: action.newTitle }
       ));
 
     case DELETE_TODO:
