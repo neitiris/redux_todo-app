@@ -16,4 +16,6 @@ const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunk)
 ));
 
+export const getIsLoading = state => state.isLoading;
+
 export default store;

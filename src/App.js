@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as todoApi from './todoApi';
 import * as todoActions from './redux/todos';
 import * as loadingAction from './redux/loading';
+import * as selectors from './store';
 import TodoList from './TodoList';
 
 const App = ({
@@ -66,7 +67,7 @@ const App = ({
 
 const mapStateToProps = state => ({
   activeTodos: state.todos.filter(todo => !todo.completed),
-  isLoading: state.isLoading,
+  isLoading: selectors.getIsLoading(state),
 });
 
 const mapDispatchToProps = dispatch => ({
