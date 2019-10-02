@@ -1,4 +1,6 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 import filterReducer from './redux/filter';
 import todosReducer from './redux/todos';
@@ -10,6 +12,8 @@ const rootReducer = (state = {}, action = {}) => ({
   isLoading: loadingReducer(state.isLoading, action),
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools(
+  applyMiddleware(thunk)
+));
 
 export default store;
