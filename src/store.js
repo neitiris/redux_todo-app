@@ -17,5 +17,6 @@ const store = createStore(rootReducer, composeWithDevTools(
 ));
 
 export const getIsLoading = state => state.isLoading;
+export const getActiveTodos = state => state.activeTodos;
 
 export default store;
