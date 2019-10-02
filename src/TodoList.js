@@ -76,7 +76,7 @@ const mapDispatch = dispatch => ({
   placeFirst: todoId => dispatch(todoActions.placeFirst(todoId)),
   moveUp: todo => dispatch(todoActions.moveUp(todo)),
   moveDown: todoId => dispatch(todoActions.moveDown(todoId)),
-  placeLastTodo: todoId => dispatch(todoActions.placeLastTodo(todoId)),
+  placeLastTodo: todoId => dispatch(todoActions.placeLast(todoId)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
