@@ -6,6 +6,14 @@ export const getTodos = async() => {
   return response.json();
 };
 
+export const moveTodo = (todoId, newPosition) => {
+  fetch(`${API_URL}/todos/${todoId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify({ position: newPosition }),
+  });
+};
+
 export const updateTodoTitle = (todoId, newTitleOfTodo) => {
   const data = {
     title: newTitleOfTodo,
