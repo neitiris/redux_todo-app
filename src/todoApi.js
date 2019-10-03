@@ -6,16 +6,14 @@ export const getTodos = async() => {
   return response.json();
 };
 
-export const updateTodo = (
-  todoId, newTitleOfTodo, todoCompleted, todoIndex
-) => {
+export const updateTodo = (todo, newTitleOfTodo, todoIndex) => {
   const data = {
+    ...todo,
     title: newTitleOfTodo,
-    completed: todoCompleted,
     position: todoIndex,
   };
 
-  fetch(`https://mgrinko-todo-api.herokuapp.com/todos/:${todoId}`,
+  fetch(`https://mgrinko-todo-api.herokuapp.com/todos/:${todo.id}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +22,9 @@ export const updateTodo = (
       body: JSON.stringify(data),
     })
     // eslint-disable-next-line
-    .then((res) => { console.log(res); })
+    .then((res) => res.json())
+    // eslint-disable-next-line
+    .then((response) => { console.log('Success:', response); } )
     // eslint-disable-next-line
     .catch((res) => { console.error(res); });
 };
