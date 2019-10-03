@@ -6,4 +6,14 @@ export const getTodos = async() => {
   return response.json();
 };
 
-export const addTodo = () => {};
+export const addTodoOnServer = async(title) => {
+  const response = await fetch(`${API_URL}/todos`, {
+    method: 'POST',
+    body: JSON.stringify({ title }),
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+  });
+
+  return response.json();
+};
