@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as selectors from './store';
 import * as todoActions from './redux/todos';
+import * as todoApi from './todoApi';
 
 const TodoList = ({
   todos,
@@ -34,7 +35,9 @@ const TodoList = ({
     }
   };
 
-  const handleSaveNewTitle = (event, todoTitle, todoId, todoCompleted) => {
+  const handleSaveNewTitle = (
+    event, todoTitle, todoId, todoCompleted, todoIndex
+  ) => {
     event.preventDefault();
 
     if (newTitleOfTodo && newTitleOfTodo !== todoTitle) {
@@ -42,19 +45,7 @@ const TodoList = ({
       setNewTitleOfTodo('');
       setEditedTodoId('');
 
-      // const data =  { title: newTitleOfTodo, completed: todoCompleted }
-
-      // fetch(`https://mgrinko-todo-api.herokuapp.com/todos/:${todoId}`,
-      //   {
-      //     headers: {
-      //       'Accept': 'application/json',
-      //       'Content-Type': 'application/json'
-      //     },
-      //     method: "POST",
-      //     body: JSON.stringify(data)
-      //   })
-      //   .then(function(res){ console.log(res) })
-      //   .catch(function(res){ console.log(res) })
+      todoApi.updateTodo(todoId, newTitleOfTodo, todoCompleted, todoIndex);
     }
   };
 
@@ -63,7 +54,7 @@ const TodoList = ({
       <strong>Todos:</strong>
 
       <ul className="TodoList__list">
-        {todos.map(todo => (
+        {todos.map((todo, todoIndex) => (
           <li
             key={todo.id}
             className="TodoList__item"
@@ -85,7 +76,7 @@ const TodoList = ({
 
               <form
                 onSubmit={event => handleSaveNewTitle(
-                  event, todo.title, todo.id, todo.completed
+                  event, todo.title, todo.id, todo.completed, todoIndex
                 )}
                 className={todo.id === editedTodoId ? '' : 'hide'}
               >
