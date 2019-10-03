@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as selectors from './store';
 import * as todoActions from './redux/todos';
+import * as todoApi from './todoApi';
 
 const TodoList = ({
   todos,
@@ -122,7 +123,10 @@ const TodoList = ({
 
               <button
                 type="button"
-                onClick={() => deleteTodo(todo.id)}
+                onClick={() => {
+                  deleteTodo(todo.id);
+                  todoApi.removeTodo(todo.id);
+                }}
               >
               x
               </button>

@@ -6,6 +6,14 @@ export const getTodos = async() => {
   return response.json();
 };
 
+export const removeTodo = async(id) => {
+  const response = await fetch(`${API_URL}/todos/${id}`, {
+    method: 'DELETE',
+  });
+  
+  return response.json();
+};
+
 export const addTodoOnServer = async(title) => {
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
