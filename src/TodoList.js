@@ -38,14 +38,13 @@ const TodoList = ({
   const handleSaveNewTitle = (event, todoId) => {
     event.preventDefault();
     const todoForChange = todos.find(todo => todo.id === todoId);
-    const todoIndex = todos.findIndex(todo => todo.id === todoId);
 
     if (newTitleOfTodo && newTitleOfTodo !== todoForChange.title) {
       renameTodo(todoId, newTitleOfTodo);
       setNewTitleOfTodo('');
       setEditedTodoId('');
 
-      todoApi.updateTodo(todoForChange, newTitleOfTodo, todoIndex);
+      todoApi.updateTodo(todoId, newTitleOfTodo);
     }
   };
 
