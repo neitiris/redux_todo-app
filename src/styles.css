@@ -55,6 +55,12 @@ button:hover {
   border-bottom: 1px dashed lightgray;
 }
 
+.TodoList__item-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .loader {
   border-radius: 50%;
   width: 2em;

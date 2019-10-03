@@ -53,74 +53,78 @@ const TodoList = ({
             key={todo.id}
             className="TodoList__item"
           >
-            <label>
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => toggleTodo(todo.id)}
-              />
-            </label>
-            <p onDoubleClick={() => (
-              handleStartEditTodoTitle(todo.id, todo.title)
-            )}
-            >
-              {todo.title}
-            </p>
+            <div className="TodoList__item-name">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => toggleTodo(todo.id)}
+                />
+              </label>
+              <span onDoubleClick={() => (
+                handleStartEditTodoTitle(todo.id, todo.title)
+              )}
+              >
+                {todo.title}
+              </span>
 
-            <form
-              onSubmit={event => handleSaveNewTitle(event, todo.title)}
-              className={todo.id === editedTodoId ? '' : 'hide'}
-            >
-              <input
-                type="text"
-                value={todo.id === editedTodoId ? newTitleOfTodo : todo.title}
-                onChange={event => handleChangeNewTitle(event)}
-              />
+              <form
+                onSubmit={event => handleSaveNewTitle(event, todo.title)}
+                className={todo.id === editedTodoId ? '' : 'hide'}
+              >
+                <input
+                  type="text"
+                  value={todo.id === editedTodoId ? newTitleOfTodo : todo.title}
+                  onChange={event => handleChangeNewTitle(event)}
+                />
 
-              <button type="submit">Save</button>
+                <button type="submit">Save</button>
+
+                <button
+                  type="button"
+                  onClick={() => handleCancelChanges(todo.title)}
+                >
+                  Cancel
+                </button>
+              </form>
+            </div>
+
+            <div>
+              <button
+                type="button"
+                onClick={() => placeFirst(todo.id)}
+              >
+              Place First
+              </button>
 
               <button
                 type="button"
-                onClick={() => handleCancelChanges(todo.title)}
+                onClick={() => moveUp(todo)}
               >
-                Cancel
+              Move up
               </button>
-            </form>
 
-            <button
-              type="button"
-              onClick={() => placeFirst(todo.id)}
-            >
-            Place First
-            </button>
+              <button
+                type="button"
+                onClick={() => moveDown(todo.id)}
+              >
+              Move down
+              </button>
 
-            <button
-              type="button"
-              onClick={() => moveUp(todo)}
-            >
-            Move up
-            </button>
+              <button
+                type="button"
+                onClick={() => placeLastTodo(todo.id)}
+              >
+              Move to the end
+              </button>
 
-            <button
-              type="button"
-              onClick={() => moveDown(todo.id)}
-            >
-            Move down
-            </button>
-
-            <button
-              type="button"
-              onClick={() => placeLastTodo(todo.id)}
-            >
-            Move to the end
-            </button>
-
-            <button
-              type="button"
-              onClick={() => deleteTodo(todo.id)}
-            >
-            x
-            </button>
+              <button
+                type="button"
+                onClick={() => deleteTodo(todo.id)}
+              >
+              x
+              </button>
+            </div>
           </li>
         ))}
       </ul>
