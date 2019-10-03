@@ -9,8 +9,6 @@ export const getTodos = async() => {
 export const updateTodo = (todo, newTitleOfTodo, todoIndex) => {
   const data = {
     title: newTitleOfTodo,
-    completed: false,
-    position: todoIndex,
   };
 
   fetch(`https://mgrinko-todo-api.herokuapp.com/todos/:${todo.id}`,
