@@ -64,7 +64,10 @@ const TodoList = ({
                 <input
                   type="checkbox"
                   checked={todo.completed}
-                  onChange={() => toggleTodo(todo.id)}
+                  onChange={() => {
+                    toggleTodo(todo.id);
+                    todoApi.toggleTodo(todo);
+                  }}
                 />
               </label>
               <span onDoubleClick={() => (
