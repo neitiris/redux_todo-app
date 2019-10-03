@@ -1,6 +1,9 @@
+import uuidv1 from 'uuid/v1';
+
 const SET_TODOS = 'SET_TODOS';
 const ADD_TODO = 'ADD_TODO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
+const TOGGLE_ALL = 'TOGGLE_ALL';
 const RENAME_TODO = 'RENAME_TODO';
 const DELETE_TODO = 'DELETE_TODO';
 const MOVE_UP = 'MOVE_UP';
@@ -12,6 +15,7 @@ const SET_ORDER = 'SET_ORDER';
 export const setTodos = todos => ({ type: SET_TODOS, todos });
 export const addTodo = title => ({ type: ADD_TODO, title });
 export const toggleTodo = todoId => ({ type: TOGGLE_TODO, todoId });
+export const toggleAll = isToggleAll => ({ type: TOGGLE_ALL, isToggleAll });
 export const renameTodo = (todoId, newTitle) => (
   { type: RENAME_TODO, todoId, newTitle }
 );
@@ -29,7 +33,7 @@ const todosReducer = (todos = [], action = {}) => {
 
     case ADD_TODO:
       return [...todos, {
-        id: Date.now(),
+        id: uuidv1('uuid/v1'),
         title: action.title,
         completed: false,
       }];
@@ -40,6 +44,12 @@ const todosReducer = (todos = [], action = {}) => {
           ? todo
           : { ...todo, completed: !todo.completed }
       ));
+
+    case TOGGLE_ALL:
+      return todos.map(todo => ({
+        ...todo,
+        completed: !action.isToggleAll,
+      }));
 
     case RENAME_TODO:
       return todos.map(todo => (

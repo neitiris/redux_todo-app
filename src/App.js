@@ -11,11 +11,13 @@ const App = ({
   activeTodos,
   setTodos,
   addTodo,
+  toggleAll,
   enableLoading,
   disableLoading,
   isLoading,
 }) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
+  const [isToggleAll, handleToggle] = useState(false);
 
   useEffect(() => {
     enableLoading();
@@ -34,6 +36,11 @@ const App = ({
 
   const handleNewTitleChange = (event) => {
     setNewTodoTitle(event.target.value);
+  };
+
+  const handleToggleAll = () => {
+    handleToggle(!isToggleAll);
+    toggleAll(isToggleAll);
   };
 
   return (
@@ -56,6 +63,17 @@ const App = ({
               <button type="submit">Add</button>
             </form>
 
+            <label htmlFor="toggle-all">
+              <input
+                type="checkbox"
+                id="toggle-all"
+                name="toggle-all"
+                completed={isToggleAll}
+                onChange={() => handleToggleAll(!isToggleAll)}
+              />
+              Toggle all todos
+            </label>
+
             <TodoList />
           </>
         )
@@ -66,7 +84,7 @@ const App = ({
 };
 
 const mapStateToProps = state => ({
-  activeTodos: state.todos.filter(todo => !todo.completed),
+  activeTodos: selectors.getActiveTodos(state),
   isLoading: selectors.getIsLoading(state),
 });
 
@@ -75,6 +93,7 @@ const mapDispatchToProps = dispatch => ({
   addTodo: value => dispatch(todoActions.addTodo(value)),
   enableLoading: () => dispatch(loadingAction.enableLoading()),
   disableLoading: () => dispatch(loadingAction.disableLoading()),
+  toggleAll: isToggleAll => dispatch(todoActions.toggleAll(isToggleAll)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
@@ -85,5 +104,6 @@ App.propTypes = {
   setTodos: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,
+  toggleAll: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
