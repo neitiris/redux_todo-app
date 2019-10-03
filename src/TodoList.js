@@ -34,13 +34,27 @@ const TodoList = ({
     }
   };
 
-  const handleSaveNewTitle = (event, todoTitle) => {
+  const handleSaveNewTitle = (event, todoTitle, todoId, todoCompleted) => {
     event.preventDefault();
 
     if (newTitleOfTodo && newTitleOfTodo !== todoTitle) {
       renameTodo(editedTodoId, newTitleOfTodo);
       setNewTitleOfTodo('');
       setEditedTodoId('');
+
+      // const data =  { title: newTitleOfTodo, completed: todoCompleted }
+
+      // fetch(`https://mgrinko-todo-api.herokuapp.com/todos/:${todoId}`,
+      //   {
+      //     headers: {
+      //       'Accept': 'application/json',
+      //       'Content-Type': 'application/json'
+      //     },
+      //     method: "POST",
+      //     body: JSON.stringify(data)
+      //   })
+      //   .then(function(res){ console.log(res) })
+      //   .catch(function(res){ console.log(res) })
     }
   };
 
@@ -70,7 +84,9 @@ const TodoList = ({
               </span>
 
               <form
-                onSubmit={event => handleSaveNewTitle(event, todo.title)}
+                onSubmit={event => handleSaveNewTitle(
+                  event, todo.title, todo.id, todo.completed
+                )}
                 className={todo.id === editedTodoId ? '' : 'hide'}
               >
                 <input
