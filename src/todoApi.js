@@ -7,3 +7,19 @@ export const getTodos = async() => {
 };
 
 export const addTodo = () => {};
+
+export const toggleTodo = async(todo) => {
+  try {
+    await fetch(`${API_URL}/todos/${todo.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ completed: !todo.completed }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    });
+
+    return 'error while fetching todoToggle';
+  } catch {
+    return 'error while fetching todoToggle';
+  }
+};

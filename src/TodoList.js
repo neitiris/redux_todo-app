@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as selectors from './store';
 import * as todoActions from './redux/todos';
+import * as todoApi from './todoApi';
 
 const TodoList = ({
   todos,
@@ -59,7 +60,10 @@ const TodoList = ({
                 <input
                   type="checkbox"
                   checked={todo.completed}
-                  onChange={() => toggleTodo(todo.id)}
+                  onChange={() => {
+                    toggleTodo(todo.id);
+                    todoApi.toggleTodo(todo);
+                  }}
                 />
               </label>
               <span onDoubleClick={() => (
