@@ -8,15 +8,15 @@ export const getTodos = async() => {
 
 export const updateTodo = (todo, newTitleOfTodo, todoIndex) => {
   const data = {
-    ...todo,
     title: newTitleOfTodo,
+    completed: false,
     position: todoIndex,
   };
 
   fetch(`https://mgrinko-todo-api.herokuapp.com/todos/:${todo.id}`,
     {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
       },
       method: 'PATCH',
       body: JSON.stringify(data),
