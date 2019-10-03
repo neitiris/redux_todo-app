@@ -27,15 +27,15 @@ export const getCompletedTodos = state => state.todos
   .filter(todo => todo.completed);
 
 export const getVisibleTodos = (state) => {
-  switch (state.filterValue) {
+  switch (state.filter) {
     case FILTER_VALUE_ALL:
-      return getTodos();
+      return getTodos(state);
 
     case FILTER_VALUE_COMPLETED:
-      return getCompletedTodos();
+      return getCompletedTodos(state);
 
     case FILTER_VALUE_ACTIVE:
-      return getActiveTodos();
+      return getActiveTodos(state);
 
     default:
       return state.todos;
