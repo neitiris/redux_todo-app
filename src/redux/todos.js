@@ -6,7 +6,6 @@ const TOGGLE_TODO = 'TOGGLE_TODO';
 const TOGGLE_ALL = 'TOGGLE_ALL';
 const RENAME_TODO = 'RENAME_TODO';
 const DELETE_TODO = 'DELETE_TODO';
-const DELETE_COMPLETED = { type: 'DELETE_COMPLETED' };
 const MOVE_UP = 'MOVE_UP';
 const MOVE_DOWN = 'MOVE_DOWN';
 const PLACE_FIRST = 'PLACE_FIRST';
@@ -21,7 +20,6 @@ export const renameTodo = (todoId, newTitle) => (
   { type: RENAME_TODO, todoId, newTitle }
 );
 export const deleteTodo = todoId => ({ type: DELETE_TODO, todoId });
-export const deleteCompleted = () => ({ type: DELETE_COMPLETED });
 export const placeFirst = todoId => ({ type: PLACE_FIRST, todoId });
 export const moveUp = todo => ({ type: MOVE_UP, todo });
 export const moveDown = todoId => ({ type: MOVE_DOWN, todoId });
@@ -63,9 +61,6 @@ const todosReducer = (todos = [], action = {}) => {
     case DELETE_TODO:
       return todos
         .filter(todo => todo.id !== action.todoId);
-
-    case DELETE_COMPLETED:
-      return todos.filter(todo => !todo.completed);
 
     case MOVE_UP: {
       const currentPosition = todos
