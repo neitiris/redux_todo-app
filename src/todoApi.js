@@ -11,7 +11,7 @@ export const updateTodo = (todoId, newTitleOfTodo) => {
     title: newTitleOfTodo,
   };
 
-  fetch(`https://mgrinko-todo-api.herokuapp.com/todos/${todoId}`,
+  fetch(`${API_URL}/todos/${todoId}`,
     {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
