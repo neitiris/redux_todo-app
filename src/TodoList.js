@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import * as selectors from './store';
 import * as todoActions from './redux/todos';
 
+import { moveTodo } from './todoApi';
+
 const TodoList = ({
   todos,
   toggleTodo,
@@ -17,7 +19,7 @@ const TodoList = ({
     <strong>Todos:</strong>
 
     <ul className="TodoList__list">
-      {todos.map(todo => (
+      {todos.map((todo, index) => (
         <li key={todo.id} className="TodoList__item">
           <label>
             <input
@@ -31,28 +33,48 @@ const TodoList = ({
 
             <button
               type="button"
-              onClick={() => placeFirst(todo.id)}
+              onClick={() => {
+                placeFirst(todo.id);
+                if (index !== 0) {
+                  moveTodo(todo.id, 0);
+                }
+              }}
             >
               Place First
             </button>
 
             <button
               type="button"
-              onClick={() => moveUp(todo)}
+              onClick={() => {
+                moveUp(todo);
+                if (index !== 0) {
+                  moveTodo(todo.id, index - 1);
+                }
+              }}
             >
               Move up
             </button>
 
             <button
               type="button"
-              onClick={() => moveDown(todo.id)}
+              onClick={() => {
+                moveDown(todo.id);
+                if (index !== todos.length - 1) {
+                  moveTodo(todo.id, index + 1);
+                }
+              }}
             >
               Move down
             </button>
 
             <button
               type="button"
-              onClick={() => placeLastTodo(todo.id)}
+              onClick={() => {
+                placeLastTodo(todo.id);
+                if (index !== todos.length - 1) {
+                  moveTodo(todo.id, todos.length - 1);
+                }
+              }}
             >
               Move to the end
             </button>

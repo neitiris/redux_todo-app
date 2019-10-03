@@ -7,3 +7,11 @@ export const getTodos = async() => {
 };
 
 export const addTodo = () => {};
+
+export const moveTodo = async(todoId, newPosition) => {
+  await fetch(`${API_URL}/todos/${todoId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify({ position: newPosition }),
+  });
+};
