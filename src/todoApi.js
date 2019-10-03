@@ -18,7 +18,7 @@ export const toggleTodo = async(todo) => {
       },
     });
 
-    return 'error while fetching todoToggle';
+    return 'success fetching todoToggle';
   } catch {
     return 'error while fetching todoToggle';
   }
