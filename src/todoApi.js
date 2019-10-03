@@ -6,12 +6,12 @@ export const getTodos = async() => {
   return response.json();
 };
 
-export const updateTodo = (todoId, newTitleOfTodo) => {
+export const updateTodoTitle = (todoId, newTitleOfTodo) => {
   const data = {
     title: newTitleOfTodo,
   };
 
-  fetch(`https://mgrinko-todo-api.herokuapp.com/todos/${todoId}`,
+  fetch(`${API_URL}/todos/${todoId}`,
     {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -25,7 +25,7 @@ export const removeTodo = async(id) => {
   const response = await fetch(`${API_URL}/todos/${id}`, {
     method: 'DELETE',
   });
-  
+
   return response.json();
 };
 
