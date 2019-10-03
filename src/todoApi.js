@@ -6,7 +6,7 @@ export const getTodos = async() => {
   return response.json();
 };
 
-export const updateTodo = (todoId, newTitleOfTodo) => {
+export const updateTodoTitle = (todoId, newTitleOfTodo) => {
   const data = {
     title: newTitleOfTodo,
   };
@@ -25,7 +25,7 @@ export const removeTodo = async(id) => {
   const response = await fetch(`${API_URL}/todos/${id}`, {
     method: 'DELETE',
   });
-  
+
   return response.json();
 };
 

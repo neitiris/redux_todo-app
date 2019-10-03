@@ -45,7 +45,7 @@ const TodoList = ({
       setNewTitleOfTodo('');
       setEditedTodoId('');
 
-      todoApi.updateTodo(editedTodoId, newTitleOfTodo);
+      todoApi.updateTodoTitle(editedTodoId, newTitleOfTodo);
     }
   };
 
