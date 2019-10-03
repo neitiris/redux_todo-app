@@ -36,16 +36,16 @@ const TodoList = ({
     }
   };
 
-  const handleSaveNewTitle = (event, todoId) => {
+  const handleSaveNewTitle = (event) => {
     event.preventDefault();
-    const todoForChange = todos.find(todo => todo.id === todoId);
+    const todoForChange = todos.find(todo => todo.id === editedTodoId);
 
     if (newTitleOfTodo && newTitleOfTodo !== todoForChange.title) {
-      renameTodo(todoId, newTitleOfTodo);
+      renameTodo(editedTodoId, newTitleOfTodo);
       setNewTitleOfTodo('');
       setEditedTodoId('');
 
-      todoApi.updateTodo(todoId, newTitleOfTodo);
+      todoApi.updateTodoTitle(editedTodoId, newTitleOfTodo);
     }
   };
 
@@ -78,7 +78,7 @@ const TodoList = ({
               </span>
 
               <form
-                onSubmit={event => handleSaveNewTitle(event, todo.id)}
+                onSubmit={handleSaveNewTitle}
                 className={todo.id === editedTodoId ? '' : 'hide'}
               >
                 <input
