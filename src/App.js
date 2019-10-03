@@ -34,6 +34,8 @@ const App = ({
   const handleAddTodo = (event) => {
     event.preventDefault();
 
+    todoApi.addTodoOnServer(newTodoTitle);
+
     addTodo(newTodoTitle);
     setNewTodoTitle('');
   };
