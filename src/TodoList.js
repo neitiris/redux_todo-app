@@ -13,6 +13,7 @@ const TodoList = ({
   moveUp,
   moveDown,
   placeLastTodo,
+  deleteCompleted,
 }) => {
   const [newTitleOfTodo, setNewTitleOfTodo] = useState('');
   const [editedTodoId, setEditedTodoId] = useState('');
@@ -129,6 +130,12 @@ const TodoList = ({
           </li>
         ))}
       </ul>
+      <button
+        type="button"
+        onClick={() => deleteCompleted()}
+      >
+              Clear Completed
+      </button>
     </div>
   );
 };
@@ -147,6 +154,7 @@ const mapDispatch = dispatch => ({
   moveUp: todo => dispatch(todoActions.moveUp(todo)),
   moveDown: todoId => dispatch(todoActions.moveDown(todoId)),
   placeLastTodo: todoId => dispatch(todoActions.placeLast(todoId)),
+  deleteCompleted: () => dispatch(todoActions.deleteCompleted()),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
@@ -160,4 +168,5 @@ TodoList.propTypes = {
   moveDown: PropTypes.func.isRequired,
   placeLastTodo: PropTypes.func.isRequired,
   placeFirst: PropTypes.func.isRequired,
+  deleteCompleted: PropTypes.func.isRequired,
 };
