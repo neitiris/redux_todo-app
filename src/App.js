@@ -76,7 +76,7 @@ const App = ({
                 type="checkbox"
                 id="toggle-all"
                 name="toggle-all"
-                completed={isToggleAll}
+                checked={isToggleAll}
                 onChange={() => handleToggleAll(!isToggleAll)}
               />
               Toggle all todos
