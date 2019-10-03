@@ -150,7 +150,7 @@ const TodoList = ({
 };
 
 const mapState = state => ({
-  todos: selectors.getTodos(state),
+  todos: selectors.getVisibleTodos(state),
 });
 
 const mapDispatch = dispatch => ({
