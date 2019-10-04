@@ -53,6 +53,14 @@ export const removeTodo = async(id) => {
   return response.json();
 };
 
+export const removeCompleted = (completed) => {
+  completed.map(async(todo) => {
+    await fetch(`${API_URL}/todos/${todo.id}`, {
+      method: 'DELETE',
+    });
+  });
+};
+
 export const addTodoOnServer = async(title) => {
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
