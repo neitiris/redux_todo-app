@@ -64,7 +64,7 @@ const TodoList = ({
             checked={allCompleted}
             onChange={() => {
               toggleAll(allCompleted);
-              todoApi.toggleAll(allCompleted, todos);
+              todoApi.toggleAll(allCompleted, todos.map(todo => todo.id));
             }}
           />
           Toggle all todos

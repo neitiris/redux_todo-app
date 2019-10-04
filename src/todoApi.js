@@ -2,6 +2,14 @@ const API_URL = 'https://mgrinko-todo-api.herokuapp.com';
 // const API_URL = 'http://localhost:5000';
 
 const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
+const patchToServer = async(todoId, body) => fetch(
+  `${API_URL}/todos/${todoId}`,
+  {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify(body),
+  }
+);
 
 export const getTodos = async() => {
   await wait(500);
@@ -11,62 +19,32 @@ export const getTodos = async() => {
 };
 
 export const moveTodo = (todoId, newPosition) => {
-  fetch(`${API_URL}/todos/${todoId}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify({ position: newPosition }),
-  });
+  patchToServer(todoId, { position: newPosition });
 };
 
 export const updateTodoTitle = (todoId, newTitleOfTodo) => {
-  const data = {
-    title: newTitleOfTodo,
-  };
-
-  fetch(`${API_URL}/todos/${todoId}`,
-    {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    });
+  patchToServer(todoId, { title: newTitleOfTodo });
 };
 
-export const toggleAll = async(allCompleted, todos) => {
+export const toggleAll = async(allCompleted, todoIds) => {
   try {
-    const fetchedTodo = async(todo) => {
-      await fetch(`${API_URL}/todos/${todo.id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({ completed: !todo.completed }),
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-      });
+    const fetchedTodo = async(todoId) => {
+      await patchToServer(todoId, { completed: !allCompleted });
     };
 
     await Promise.all(
-      !allCompleted
-        ? todos.filter(todo => !todo.completed)
-          .map(todo => fetchedTodo(todo))
-        : todos.map(todo => fetchedTodo(todo))
+      todoIds.map(todoId => fetchedTodo(todoId))
     );
 
-    return 'success fetching todoToggle';
+    return 'success fetching toggleAll';
   } catch {
-    return 'error while fetching todoToggle';
+    return 'error while fetching toggleAll';
   }
 };
 
 export const toggleTodo = async(todo) => {
   try {
-    await fetch(`${API_URL}/todos/${todo.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ completed: !todo.completed }),
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    });
+    await patchToServer(todo.id, { completed: !todo.completed });
 
     return 'success fetching todoToggle';
   } catch {
