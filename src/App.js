@@ -6,7 +6,7 @@ import * as todoActions from './redux/todos';
 import * as loadingAction from './redux/loading';
 import * as selectors from './store';
 import TodoList from './TodoList';
-import TodosFilter from './todosFilter';
+import TodosFilter from './TodosFilter';
 
 const App = ({
   activeTodos,
