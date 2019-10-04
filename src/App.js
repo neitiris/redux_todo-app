@@ -7,11 +7,11 @@ import * as loadingAction from './redux/loading';
 import * as filterAction from './redux/filter';
 import * as selectors from './store';
 import TodoList from './TodoList';
+import AddTodoForm from './AddTodoForm';
 
 const App = ({
   activeTodos,
   setTodos,
-  addTodo,
   toggleAll,
   enableLoading,
   disableLoading,
@@ -20,7 +20,6 @@ const App = ({
   showCompleted,
   showActive,
 }) => {
-  const [newTodoTitle, setNewTodoTitle] = useState('');
   const [isToggleAll, handleToggle] = useState(false);
 
   useEffect(() => {
@@ -30,19 +29,6 @@ const App = ({
       .then(setTodos)
       .finally(disableLoading);
   }, []);
-
-  const handleAddTodo = (event) => {
-    event.preventDefault();
-
-    todoApi.addTodoOnServer(newTodoTitle);
-
-    addTodo(newTodoTitle);
-    setNewTodoTitle('');
-  };
-
-  const handleNewTitleChange = (event) => {
-    setNewTodoTitle(event.target.value);
-  };
 
   const handleToggleAll = () => {
     handleToggle(!isToggleAll);
@@ -59,15 +45,7 @@ const App = ({
       {!isLoading
         ? (
           <>
-            <form onSubmit={handleAddTodo}>
-              <input
-                type="text"
-                placeholder="Enter new todo"
-                value={newTodoTitle}
-                onChange={handleNewTitleChange}
-              />
-              <button type="submit">Add</button>
-            </form>
+            <AddTodoForm />
 
             <button type="button" onClick={showAll}>All</button>
             <button type="button" onClick={showCompleted}>Comleted</button>
@@ -100,7 +78,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setTodos: todos => dispatch(todoActions.setTodos(todos)),
-  addTodo: value => dispatch(todoActions.addTodo(value)),
   enableLoading: () => dispatch(loadingAction.enableLoading()),
   disableLoading: () => dispatch(loadingAction.disableLoading()),
   showAll: () => dispatch(filterAction.showAll()),
@@ -113,7 +90,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 App.propTypes = {
   activeTodos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  addTodo: PropTypes.func.isRequired,
   setTodos: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,
