@@ -5,8 +5,8 @@ import * as todoApi from './todoApi';
 import * as todoActions from './redux/todos';
 import * as loadingAction from './redux/loading';
 import * as selectors from './store';
-import TodoList from './TodoList';
-import TodosFilter from './TodosFilter';
+import TodoList from './todoList';
+import TodosFilter from './todosFilter';
 import AddTodoForm from './AddTodoForm';
 
 const App = ({

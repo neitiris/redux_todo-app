@@ -1,5 +1,4 @@
 import uuidv1 from 'uuid/v1';
-import { removeCompleted } from '../todoApi';
 
 const SET_TODOS = 'SET_TODOS';
 const ADD_TODO = 'ADD_TODO';
@@ -66,8 +65,6 @@ const todosReducer = (todos = [], action = {}) => {
         .filter(todo => todo.id !== action.todoId);
 
     case DELETE_COMPLETED:
-      removeCompleted(todos.filter(todo => todo.completed));
-
       return todos.filter(todo => !todo.completed);
 
     case MOVE_UP: {

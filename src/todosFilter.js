@@ -1,11 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  FILTER_VALUE_ALL,
-  FILTER_VALUE_COMPLETED,
-  FILTER_VALUE_ACTIVE,
-} from './redux/filter';
 import * as filterAction from './redux/filter';
 
 const TodosFilter = ({
@@ -13,6 +8,9 @@ const TodosFilter = ({
   showCompleted,
   showActive,
   filter,
+  FILTER_VALUE_ALL,
+  FILTER_VALUE_COMPLETED,
+  FILTER_VALUE_ACTIVE,
 }) => (
   <>
     <button
@@ -56,4 +54,7 @@ TodosFilter.propTypes = {
   showCompleted: PropTypes.func.isRequired,
   showActive: PropTypes.func.isRequired,
   filter: PropTypes.bool.isRequired,
+  FILTER_VALUE_ALL: PropTypes.string.isRequired,
+  FILTER_VALUE_COMPLETED: PropTypes.string.isRequired,
+  FILTER_VALUE_ACTIVE: PropTypes.string.isRequired,
 };
