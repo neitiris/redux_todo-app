@@ -1,6 +1,10 @@
 const API_URL = 'https://mgrinko-todo-api.herokuapp.com';
+// const API_URL = 'http://localhost:5000';
+
+const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export const getTodos = async() => {
+  await wait(500);
   const response = await fetch(`${API_URL}/todos`);
 
   return response.json();
@@ -29,6 +33,22 @@ export const updateTodoTitle = (todoId, newTitleOfTodo) => {
     });
 };
 
+export const toggleAll = async(todo) => {
+  try {
+    await fetch(`${API_URL}/todos/${todo.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ completed: !todo.completed }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    });
+
+    return 'success fetching todoToggle';
+  } catch {
+    return 'error while fetching todoToggle';
+  }
+};
+
 export const toggleTodo = async(todo) => {
   try {
     await fetch(`${API_URL}/todos/${todo.id}`, {
@@ -53,7 +73,13 @@ export const removeTodo = async(id) => {
   return response.json();
 };
 
+export const removeCompleted = (completed) => {
+  completed.map(todo => removeTodo(todo.id));
+};
+
 export const addTodoOnServer = async(title) => {
+  await wait(500);
+
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
     body: JSON.stringify({ title }),

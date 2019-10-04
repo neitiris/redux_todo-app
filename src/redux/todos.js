@@ -1,4 +1,5 @@
 import uuidv1 from 'uuid/v1';
+import { removeCompleted } from '../todoApi';
 
 const SET_TODOS = 'SET_TODOS';
 const ADD_TODO = 'ADD_TODO';
@@ -16,7 +17,7 @@ const SET_ORDER = 'SET_ORDER';
 export const setTodos = todos => ({ type: SET_TODOS, todos });
 export const addTodo = title => ({ type: ADD_TODO, title });
 export const toggleTodo = todoId => ({ type: TOGGLE_TODO, todoId });
-export const toggleAll = isToggleAll => ({ type: TOGGLE_ALL, isToggleAll });
+export const toggleAll = allCompleted => ({ type: TOGGLE_ALL, allCompleted });
 export const renameTodo = (todoId, newTitle) => (
   { type: RENAME_TODO, todoId, newTitle }
 );
@@ -50,7 +51,7 @@ const todosReducer = (todos = [], action = {}) => {
     case TOGGLE_ALL:
       return todos.map(todo => ({
         ...todo,
-        completed: !action.isToggleAll,
+        completed: !action.allCompleted,
       }));
 
     case RENAME_TODO:
@@ -65,6 +66,8 @@ const todosReducer = (todos = [], action = {}) => {
         .filter(todo => todo.id !== action.todoId);
 
     case DELETE_COMPLETED:
+      removeCompleted(todos.filter(todo => todo.completed));
+
       return todos.filter(todo => !todo.completed);
 
     case MOVE_UP: {

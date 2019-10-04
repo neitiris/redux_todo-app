@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Be+Vietnam:400,500,600,700&display=swap");
+
+body {
+  font-family: "Be Vietnam", sans-serif;
+}
+
 button {
   cursor: pointer;
   padding: 5px 10px;
@@ -54,6 +60,10 @@ button:hover {
 .TodoList__list {
   list-style: none;
   padding-left: 5px;
+}
+
+.TodoList__toggle-all {
+  margin: 10px 0 0;
 }
 
 .TodoList__item {

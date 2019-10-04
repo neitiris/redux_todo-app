@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  FILTER_VALUE_ALL,
+  FILTER_VALUE_COMPLETED,
+  FILTER_VALUE_ACTIVE,
+} from './redux/filter';
 import * as filterAction from './redux/filter';
 
 const TodosFilter = ({
@@ -12,21 +17,21 @@ const TodosFilter = ({
   <>
     <button
       type="button"
-      className={filter === 'ALL' && 'button_selected'}
+      className={filter === FILTER_VALUE_ALL && 'button_selected'}
       onClick={showAll}
     >
     All
     </button>
     <button
       type="button"
-      className={filter === 'COMPLETED' && 'button_selected'}
+      className={filter === FILTER_VALUE_COMPLETED && 'button_selected'}
       onClick={showCompleted}
     >
     Comleted
     </button>
     <button
       type="button"
-      className={filter === 'ACTIVE' && 'button_selected'}
+      className={filter === FILTER_VALUE_ACTIVE && 'button_selected'}
       onClick={showActive}
     >
     Active
