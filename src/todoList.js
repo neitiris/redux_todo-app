@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as selectors from './store';
 import * as todoActions from './redux/todos';
 import * as todoApi from './todoApi';
+import * as loadingAction from './redux/loading';
 
 const TodoList = ({
   todos,
@@ -17,6 +18,9 @@ const TodoList = ({
   moveUp,
   moveDown,
   placeLastTodo,
+  enableLoading,
+  disableLoading,
+  removeCompleted,
 }) => {
   const [newTitleOfTodo, setNewTitleOfTodo] = useState('');
   const [editedTodoId, setEditedTodoId] = useState('');
@@ -49,6 +53,13 @@ const TodoList = ({
 
       todoApi.updateTodoTitle(editedTodoId, newTitleOfTodo);
     }
+  };
+
+  const handleClearCompleted = async() => {
+    enableLoading();
+    await removeCompleted(todos.filter(todo => todo.completed));
+    deleteCompleted();
+    disableLoading();
   };
 
   return (
@@ -180,7 +191,7 @@ const TodoList = ({
       </ul>
       <button
         type="button"
-        onClick={() => deleteCompleted()}
+        onClick={() => handleClearCompleted()}
       >
               Clear Completed
       </button>
@@ -204,6 +215,8 @@ const mapDispatch = dispatch => ({
   moveDown: todoId => dispatch(todoActions.moveDown(todoId)),
   placeLastTodo: todoId => dispatch(todoActions.placeLast(todoId)),
   deleteCompleted: () => dispatch(todoActions.deleteCompleted()),
+  enableLoading: () => dispatch(loadingAction.enableLoading()),
+  disableLoading: () => dispatch(loadingAction.disableLoading()),
   toggleAll: isToggleAll => dispatch(todoActions.toggleAll(isToggleAll)),
 });
 
@@ -221,4 +234,7 @@ TodoList.propTypes = {
   placeFirst: PropTypes.func.isRequired,
   toggleAll: PropTypes.func.isRequired,
   deleteCompleted: PropTypes.func.isRequired,
+  enableLoading: PropTypes.func.isRequired,
+  disableLoading: PropTypes.func.isRequired,
+  removeCompleted: PropTypes.func.isRequired,
 };
