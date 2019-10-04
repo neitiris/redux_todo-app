@@ -1,6 +1,10 @@
 const API_URL = 'https://mgrinko-todo-api.herokuapp.com';
+// const API_URL = 'http://localhost:5000';
+
+const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export const getTodos = async() => {
+  await wait(500);
   const response = await fetch(`${API_URL}/todos`);
 
   return response.json();
@@ -54,6 +58,8 @@ export const removeTodo = async(id) => {
 };
 
 export const addTodoOnServer = async(title) => {
+  await wait(500);
+
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
     body: JSON.stringify({ title }),
