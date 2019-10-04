@@ -15,12 +15,14 @@ const AddTodoForm = ({ addTodo }) => {
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    if (newTodoTitle) {
-      todoApi.addTodoOnServer(newTodoTitle);
-
-      addTodo(newTodoTitle);
-      setNewTodoTitle('');
+    if (!newTodoTitle) {
+      return;
     }
+
+    todoApi.addTodoOnServer(newTodoTitle);
+
+    addTodo(newTodoTitle);
+    setNewTodoTitle('');
   };
 
   return (
