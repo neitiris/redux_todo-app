@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import * as todoApi from './todoApi';
 import * as todoActions from './redux/todos';
-import * as loadingAction from './redux/loading';
+import * as loadingActions from './redux/loading';
 
-const AddTodoForm = ({ setTodos, enableLoading, disableLoading }) => {
+const AddTodoForm = ({ addTodo, enableLoading, disableLoading }) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
   const handleNewTitleChange = (event) => {
@@ -21,10 +21,9 @@ const AddTodoForm = ({ setTodos, enableLoading, disableLoading }) => {
     }
 
     enableLoading();
-    todoApi
-      .addTodoOnServer(newTodoTitle, setTodos)
+    todoApi.addTodoOnServer(newTodoTitle)
+      .then(addTodo(newTodoTitle), setNewTodoTitle(''))
       .finally(disableLoading);
-    setNewTodoTitle('');
   };
 
   return (
@@ -41,16 +40,15 @@ const AddTodoForm = ({ setTodos, enableLoading, disableLoading }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setTodos: todos => dispatch(todoActions.setTodos(todos)),
   addTodo: value => dispatch(todoActions.addTodo(value)),
-  enableLoading: () => dispatch(loadingAction.enableLoading()),
-  disableLoading: () => dispatch(loadingAction.disableLoading()),
+  enableLoading: () => dispatch(loadingActions.enableLoading()),
+  disableLoading: () => dispatch(loadingActions.disableLoading()),
 });
 
 export default connect(null, mapDispatchToProps)(AddTodoForm);
 
 AddTodoForm.propTypes = {
-  setTodos: PropTypes.func.isRequired,
+  addTodo: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,
 };
