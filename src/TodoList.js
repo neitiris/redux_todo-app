@@ -64,7 +64,10 @@ const TodoList = ({
             id="toggle-all"
             name="toggle-all"
             checked={allCompleted}
-            onChange={() => toggleAll(allCompleted)}
+            onChange={() => {
+              toggleAll(allCompleted);
+              todoApi.toggleAll(allCompleted, todos);
+            }}
           />
           Toggle all todos
         </label>

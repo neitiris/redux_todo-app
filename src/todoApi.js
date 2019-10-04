@@ -33,15 +33,24 @@ export const updateTodoTitle = (todoId, newTitleOfTodo) => {
     });
 };
 
-export const toggleAll = async(todo) => {
+export const toggleAll = async(allCompleted, todos) => {
   try {
-    await fetch(`${API_URL}/todos/${todo.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ completed: !todo.completed }),
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    });
+    const fetchedTodo = async(todo) => {
+      await fetch(`${API_URL}/todos/${todo.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ completed: !todo.completed }),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      });
+    };
+
+    await Promise.all(
+      !allCompleted
+        ? todos.filter(todo => !todo.completed)
+          .map(todo => fetchedTodo(todo))
+        : todos.map(todo => fetchedTodo(todo))
+    );
 
     return 'success fetching todoToggle';
   } catch {
