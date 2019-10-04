@@ -57,7 +57,8 @@ export const removeTodo = async(id) => {
   return response.json();
 };
 
-export const removeCompleted = (completed) => {
+export const removeCompleted = async(completed) => {
+  await wait(500);
   completed.map(todo => removeTodo(todo.id));
 };
 
