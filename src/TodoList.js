@@ -51,8 +51,6 @@ const TodoList = ({
     }
   };
 
-  // const allCompleted = todos.every(todo => todo.completed === true);
-
   return (
     <div className="TodoList">
       <strong>Todos:</strong>
