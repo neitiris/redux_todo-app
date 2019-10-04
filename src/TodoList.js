@@ -7,6 +7,7 @@ import * as todoApi from './todoApi';
 
 const TodoList = ({
   todos,
+  allCompleted,
   toggleTodo,
   toggleAll,
   renameTodo,
@@ -50,7 +51,7 @@ const TodoList = ({
     }
   };
 
-  const allCompleted = todos.every(todo => todo.completed === true);
+  // const allCompleted = todos.every(todo => todo.completed === true);
 
   return (
     <div className="TodoList">
@@ -188,6 +189,7 @@ const TodoList = ({
 
 const mapState = state => ({
   todos: selectors.getVisibleTodos(state),
+  allCompleted: selectors.getAllCompleted(state),
 });
 
 const mapDispatch = dispatch => ({
@@ -208,6 +210,7 @@ export default connect(mapState, mapDispatch)(TodoList);
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allCompleted: PropTypes.bool.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   renameTodo: PropTypes.func.isRequired,
   moveUp: PropTypes.func.isRequired,
