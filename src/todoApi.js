@@ -61,8 +61,8 @@ export const removeCompleted = (completed) => {
   completed.map(todo => removeTodo(todo.id));
 };
 
-export const addTodoOnServer = async(title) => {
-  await wait(500);
+export const addTodoOnServer = async(title, setTodos) => {
+  await wait(1000);
 
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
@@ -71,6 +71,9 @@ export const addTodoOnServer = async(title) => {
       'Content-Type': 'application/json; charset=utf-8',
     },
   });
+
+  getTodos()
+    .then(setTodos);
 
   return response.json();
 };
