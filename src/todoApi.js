@@ -1,29 +1,29 @@
 const API_URL = 'https://mgrinko-todo-api.herokuapp.com';
+// const API_URL = 'http://localhost:5000';
+
+const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 export const getTodos = async() => {
+  await wait(500);
   const response = await fetch(`${API_URL}/todos`);
 
   return response.json();
 };
 
-export const addTodoOnServer = async(title) => {
-  const response = await fetch(`${API_URL}/todos`, {
-    method: 'POST',
-    body: JSON.stringify({ title }),
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-    },
+export const moveTodo = (todoId, newPosition) => {
+  fetch(`${API_URL}/todos/${todoId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify({ position: newPosition }),
   });
-
-  return response.json();
 };
 
-export const updateTodo = (todoId, newTitleOfTodo) => {
+export const updateTodoTitle = (todoId, newTitleOfTodo) => {
   const data = {
     title: newTitleOfTodo,
   };
 
-  fetch(`https://mgrinko-todo-api.herokuapp.com/todos/${todoId}`,
+  fetch(`${API_URL}/todos/${todoId}`,
     {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -52,6 +52,20 @@ export const toggleTodo = async(todo) => {
 export const removeTodo = async(id) => {
   const response = await fetch(`${API_URL}/todos/${id}`, {
     method: 'DELETE',
+  });
+
+  return response.json();
+};
+
+export const addTodoOnServer = async(title) => {
+  await wait(500);
+
+  const response = await fetch(`${API_URL}/todos`, {
+    method: 'POST',
+    body: JSON.stringify({ title }),
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
   });
 
   return response.json();

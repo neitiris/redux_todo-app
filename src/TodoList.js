@@ -37,16 +37,16 @@ const TodoList = ({
     }
   };
 
-  const handleSaveNewTitle = (event, todoId) => {
+  const handleSaveNewTitle = (event) => {
     event.preventDefault();
-    const todoForChange = todos.find(todo => todo.id === todoId);
+    const todoForChange = todos.find(todo => todo.id === editedTodoId);
 
     if (newTitleOfTodo && newTitleOfTodo !== todoForChange.title) {
-      renameTodo(todoId, newTitleOfTodo);
+      renameTodo(editedTodoId, newTitleOfTodo);
       setNewTitleOfTodo('');
       setEditedTodoId('');
 
-      todoApi.updateTodo(todoId, newTitleOfTodo);
+      todoApi.updateTodoTitle(editedTodoId, newTitleOfTodo);
     }
   };
 
@@ -70,7 +70,7 @@ const TodoList = ({
       </div>
 
       <ul className="TodoList__list">
-        {todos.map(todo => (
+        {todos.map((todo, index) => (
           <li
             key={todo.id}
             className="TodoList__item"
@@ -94,7 +94,7 @@ const TodoList = ({
               </span>
 
               <form
-                onSubmit={event => handleSaveNewTitle(event, todo.id)}
+                onSubmit={handleSaveNewTitle}
                 className={todo.id === editedTodoId ? '' : 'hide'}
               >
                 <input
@@ -117,28 +117,48 @@ const TodoList = ({
             <div>
               <button
                 type="button"
-                onClick={() => placeFirst(todo.id)}
+                onClick={() => {
+                  placeFirst(todo.id);
+                  if (index !== 0) {
+                    todoApi.moveTodo(todo.id, 0);
+                  }
+                }}
               >
-              Place First
+                Place First
               </button>
 
               <button
                 type="button"
-                onClick={() => moveUp(todo)}
+                onClick={() => {
+                  moveUp(todo);
+                  if (index !== 0) {
+                    todoApi.moveTodo(todo.id, index - 1);
+                  }
+                }}
               >
-              Move up
+                Move up
               </button>
 
               <button
                 type="button"
-                onClick={() => moveDown(todo.id)}
+                onClick={() => {
+                  moveDown(todo.id);
+                  if (index !== todos.length - 1) {
+                    todoApi.moveTodo(todo.id, index + 1);
+                  }
+                }}
               >
               Move down
               </button>
 
               <button
                 type="button"
-                onClick={() => placeLastTodo(todo.id)}
+                onClick={() => {
+                  placeLastTodo(todo.id);
+                  if (index !== todos.length - 1) {
+                    todoApi.moveTodo(todo.id, todos.length - 1);
+                  }
+                }}
               >
               Move to the end
               </button>
