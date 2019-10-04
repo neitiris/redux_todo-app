@@ -7,14 +7,16 @@ import * as todoApi from './todoApi';
 
 const TodoList = ({
   todos,
+  allCompleted,
   toggleTodo,
+  toggleAll,
   renameTodo,
   deleteTodo,
+  deleteCompleted,
   placeFirst,
   moveUp,
   moveDown,
   placeLastTodo,
-  deleteCompleted,
 }) => {
   const [newTitleOfTodo, setNewTitleOfTodo] = useState('');
   const [editedTodoId, setEditedTodoId] = useState('');
@@ -52,6 +54,19 @@ const TodoList = ({
   return (
     <div className="TodoList">
       <strong>Todos:</strong>
+
+      <div className="TodoList__toggle-all">
+        <label htmlFor="toggle-all">
+          <input
+            type="checkbox"
+            id="toggle-all"
+            name="toggle-all"
+            checked={allCompleted}
+            onChange={() => toggleAll(allCompleted)}
+          />
+          Toggle all todos
+        </label>
+      </div>
 
       <ul className="TodoList__list">
         {todos.map((todo, index) => (
@@ -172,6 +187,7 @@ const TodoList = ({
 
 const mapState = state => ({
   todos: selectors.getVisibleTodos(state),
+  allCompleted: selectors.getAllCompleted(state),
 });
 
 const mapDispatch = dispatch => ({
@@ -185,12 +201,14 @@ const mapDispatch = dispatch => ({
   moveDown: todoId => dispatch(todoActions.moveDown(todoId)),
   placeLastTodo: todoId => dispatch(todoActions.placeLast(todoId)),
   deleteCompleted: () => dispatch(todoActions.deleteCompleted()),
+  toggleAll: isToggleAll => dispatch(todoActions.toggleAll(isToggleAll)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allCompleted: PropTypes.bool.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   renameTodo: PropTypes.func.isRequired,
   moveUp: PropTypes.func.isRequired,
@@ -198,5 +216,6 @@ TodoList.propTypes = {
   moveDown: PropTypes.func.isRequired,
   placeLastTodo: PropTypes.func.isRequired,
   placeFirst: PropTypes.func.isRequired,
+  toggleAll: PropTypes.func.isRequired,
   deleteCompleted: PropTypes.func.isRequired,
 };

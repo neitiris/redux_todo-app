@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as todoApi from './todoApi';
@@ -6,19 +6,16 @@ import * as todoActions from './redux/todos';
 import * as loadingAction from './redux/loading';
 import * as selectors from './store';
 import TodoList from './TodoList';
+import TodosFilter from './TodosFilter';
 import AddTodoForm from './AddTodoForm';
-import TodosFilter from './todosFilter';
 
 const App = ({
   activeTodos,
   setTodos,
-  toggleAll,
   enableLoading,
   disableLoading,
   isLoading,
 }) => {
-  const [isToggleAll, handleToggle] = useState(false);
-
   useEffect(() => {
     enableLoading();
 
@@ -26,11 +23,6 @@ const App = ({
       .then(setTodos)
       .finally(disableLoading);
   }, []);
-
-  const handleToggleAll = () => {
-    handleToggle(!isToggleAll);
-    toggleAll(isToggleAll);
-  };
 
   return (
     <main className="App">
@@ -45,17 +37,6 @@ const App = ({
             <AddTodoForm />
 
             <TodosFilter />
-
-            <label htmlFor="toggle-all">
-              <input
-                type="checkbox"
-                id="toggle-all"
-                name="toggle-all"
-                checked={isToggleAll}
-                onChange={() => handleToggleAll(!isToggleAll)}
-              />
-              Toggle all todos
-            </label>
 
             <TodoList />
           </>
@@ -85,6 +66,5 @@ App.propTypes = {
   setTodos: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,
-  toggleAll: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
