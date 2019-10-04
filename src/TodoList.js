@@ -8,14 +8,16 @@ import * as loadingAction from './redux/loading';
 
 const TodoList = ({
   todos,
+  allCompleted,
   toggleTodo,
+  toggleAll,
   renameTodo,
   deleteTodo,
+  deleteCompleted,
   placeFirst,
   moveUp,
   moveDown,
   placeLastTodo,
-  deleteCompleted,
   enableLoading,
   disableLoading,
   removeCompleted,
@@ -63,6 +65,19 @@ const TodoList = ({
   return (
     <div className="TodoList">
       <strong>Todos:</strong>
+
+      <div className="TodoList__toggle-all">
+        <label htmlFor="toggle-all">
+          <input
+            type="checkbox"
+            id="toggle-all"
+            name="toggle-all"
+            checked={allCompleted}
+            onChange={() => toggleAll(allCompleted)}
+          />
+          Toggle all todos
+        </label>
+      </div>
 
       <ul className="TodoList__list">
         {todos.map((todo, index) => (
@@ -183,6 +198,7 @@ const TodoList = ({
 
 const mapState = state => ({
   todos: selectors.getVisibleTodos(state),
+  allCompleted: selectors.getAllCompleted(state),
 });
 
 const mapDispatch = dispatch => ({
@@ -198,12 +214,14 @@ const mapDispatch = dispatch => ({
   deleteCompleted: () => dispatch(todoActions.deleteCompleted()),
   enableLoading: () => dispatch(loadingAction.enableLoading()),
   disableLoading: () => dispatch(loadingAction.disableLoading()),
+  toggleAll: isToggleAll => dispatch(todoActions.toggleAll(isToggleAll)),
 });
 
 export default connect(mapState, mapDispatch)(TodoList);
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  allCompleted: PropTypes.bool.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   renameTodo: PropTypes.func.isRequired,
   moveUp: PropTypes.func.isRequired,
@@ -211,6 +229,7 @@ TodoList.propTypes = {
   moveDown: PropTypes.func.isRequired,
   placeLastTodo: PropTypes.func.isRequired,
   placeFirst: PropTypes.func.isRequired,
+  toggleAll: PropTypes.func.isRequired,
   deleteCompleted: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,

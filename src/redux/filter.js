@@ -1,5 +1,5 @@
 export const FILTER_VALUE_ALL = 'ALL';
-export const FILTER_VALUE_COMPLETED = 'COMPLITED';
+export const FILTER_VALUE_COMPLETED = 'COMPLETED';
 export const FILTER_VALUE_ACTIVE = 'ACTIVE';
 
 const SHOW_ALL = 'SHOW_ALL';

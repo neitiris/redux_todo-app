@@ -16,7 +16,7 @@ const SET_ORDER = 'SET_ORDER';
 export const setTodos = todos => ({ type: SET_TODOS, todos });
 export const addTodo = title => ({ type: ADD_TODO, title });
 export const toggleTodo = todoId => ({ type: TOGGLE_TODO, todoId });
-export const toggleAll = isToggleAll => ({ type: TOGGLE_ALL, isToggleAll });
+export const toggleAll = allCompleted => ({ type: TOGGLE_ALL, allCompleted });
 export const renameTodo = (todoId, newTitle) => (
   { type: RENAME_TODO, todoId, newTitle }
 );
@@ -50,7 +50,7 @@ const todosReducer = (todos = [], action = {}) => {
     case TOGGLE_ALL:
       return todos.map(todo => ({
         ...todo,
-        completed: !action.isToggleAll,
+        completed: !action.allCompleted,
       }));
 
     case RENAME_TODO:
