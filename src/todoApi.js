@@ -57,6 +57,10 @@ export const removeTodo = async(id) => {
   return response.json();
 };
 
+export const removeCompleted = (completed) => {
+  completed.map(todo => removeTodo(todo.id));
+};
+
 export const addTodoOnServer = async(title) => {
   await wait(500);
 
