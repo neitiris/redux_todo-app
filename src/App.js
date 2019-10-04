@@ -12,7 +12,6 @@ const App = ({
   activeTodos,
   setTodos,
   addTodo,
-  toggleAll,
   enableLoading,
   disableLoading,
   isLoading,
@@ -21,7 +20,6 @@ const App = ({
   showActive,
 }) => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
-  const [isToggleAll, handleToggle] = useState(false);
 
   useEffect(() => {
     enableLoading();
@@ -42,11 +40,6 @@ const App = ({
 
   const handleNewTitleChange = (event) => {
     setNewTodoTitle(event.target.value);
-  };
-
-  const handleToggleAll = () => {
-    handleToggle(!isToggleAll);
-    toggleAll(isToggleAll);
   };
 
   return (
@@ -73,17 +66,6 @@ const App = ({
             <button type="button" onClick={showCompleted}>Comleted</button>
             <button type="button" onClick={showActive}>Active</button>
 
-            <label htmlFor="toggle-all">
-              <input
-                type="checkbox"
-                id="toggle-all"
-                name="toggle-all"
-                checked={isToggleAll}
-                onChange={() => handleToggleAll(!isToggleAll)}
-              />
-              Toggle all todos
-            </label>
-
             <TodoList />
           </>
         )
@@ -106,7 +88,6 @@ const mapDispatchToProps = dispatch => ({
   showAll: () => dispatch(filterAction.showAll()),
   showCompleted: () => dispatch(filterAction.showCompleted()),
   showActive: () => dispatch(filterAction.showActive()),
-  toggleAll: isToggleAll => dispatch(todoActions.toggleAll(isToggleAll)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
@@ -120,6 +101,5 @@ App.propTypes = {
   showAll: PropTypes.func.isRequired,
   showCompleted: PropTypes.func.isRequired,
   showActive: PropTypes.func.isRequired,
-  toggleAll: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
