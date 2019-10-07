@@ -57,7 +57,7 @@ const TodoList = ({
 
   const handleClearCompleted = async() => {
     enableLoading();
-    await removeCompleted(todos.filter(todo => todo.completed));
+    await todoApi.removeCompleted(todos.filter(todo => todo.completed));
     deleteCompleted();
     disableLoading();
   };
