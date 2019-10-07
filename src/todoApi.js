@@ -62,7 +62,16 @@ export const removeTodo = async(id) => {
 
 export const removeCompleted = async(completed) => {
   await wait(500);
-  completed.map(todo => removeTodo(todo.id));
+
+  try {
+    await Promise.all(
+      completed.map(todo => removeTodo(todo.id))
+    );
+
+    return 'success remove completed todos';
+  } catch {
+    return 'error while remove completed todos';
+  }
 };
 
 export const addTodoOnServer = async(title) => {
