@@ -20,7 +20,6 @@ const TodoList = ({
   placeLastTodo,
   enableLoading,
   disableLoading,
-  removeCompleted,
 }) => {
   const [newTitleOfTodo, setNewTitleOfTodo] = useState('');
   const [editedTodoId, setEditedTodoId] = useState('');
@@ -57,7 +56,7 @@ const TodoList = ({
 
   const handleClearCompleted = async() => {
     enableLoading();
-    await removeCompleted(todos.filter(todo => todo.completed));
+    await todoApi.removeCompleted(todos.filter(todo => todo.completed));
     deleteCompleted();
     disableLoading();
   };
@@ -236,5 +235,4 @@ TodoList.propTypes = {
   deleteCompleted: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,
-  removeCompleted: PropTypes.func.isRequired,
 };

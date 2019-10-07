@@ -66,7 +66,7 @@ export const removeCompleted = async(completed) => {
 };
 
 export const addTodoOnServer = async(title) => {
-  await wait(500);
+  await wait(1000);
 
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
