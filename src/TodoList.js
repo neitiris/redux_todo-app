@@ -20,7 +20,6 @@ const TodoList = ({
   placeLastTodo,
   enableLoading,
   disableLoading,
-  removeCompleted,
 }) => {
   const [newTitleOfTodo, setNewTitleOfTodo] = useState('');
   const [editedTodoId, setEditedTodoId] = useState('');
@@ -73,7 +72,10 @@ const TodoList = ({
             id="toggle-all"
             name="toggle-all"
             checked={allCompleted}
-            onChange={() => toggleAll(allCompleted)}
+            onChange={() => {
+              toggleAll(allCompleted);
+              todoApi.toggleAll(allCompleted, todos.map(todo => todo.id));
+            }}
           />
           Toggle all todos
         </label>
@@ -158,7 +160,7 @@ const TodoList = ({
                   }
                 }}
               >
-              Move down
+                Move down
               </button>
 
               <button
@@ -170,7 +172,7 @@ const TodoList = ({
                   }
                 }}
               >
-              Move to the end
+                Move to the end
               </button>
 
               <button
@@ -180,7 +182,7 @@ const TodoList = ({
                   todoApi.removeTodo(todo.id);
                 }}
               >
-              x
+                x
               </button>
             </div>
           </li>
@@ -188,9 +190,9 @@ const TodoList = ({
       </ul>
       <button
         type="button"
-        onClick={() => handleClearCompleted()}
+        onClick={handleClearCompleted}
       >
-              Clear Completed
+        Clear Completed
       </button>
     </div>
   );
@@ -233,5 +235,4 @@ TodoList.propTypes = {
   deleteCompleted: PropTypes.func.isRequired,
   enableLoading: PropTypes.func.isRequired,
   disableLoading: PropTypes.func.isRequired,
-  removeCompleted: PropTypes.func.isRequired,
 };
